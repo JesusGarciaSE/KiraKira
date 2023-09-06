@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Fugaz+One&family=Press+Start+2P&family=Roboto:wght@100&family=Share+Tech&family=Share+Tech+Mono&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+  h1 {
+    @apply mb-4 text-4xl leading-none
+  }
+
+  h2 {
+    @apply mb-4 text-3xl leading-none
+  }
+
+  h3 {
+    @apply text-2xl mb-4 leading-none
+  }
+
+  h4 {
+    @apply text-lg mb-4 leading-none
+  }
+
+  h5 {
+    @apply text-base mb-4 leading-none
+  }
+  
+
+  section {
+    @apply flex-1 grid place-content-center;
+  }
+
+  p {
+    @apply mb-4;
+  }
+}
+
+/* Root Variables */
+:root {
+  --font-color: #e7e7e7;
+  --backgound-color: #131313;
+  --zero-one-primary: rgba(220,246,0,1);
+  --zero-one-secondary: red;
+  --zero-one-font: #131313;
+  --saber-primary: red;
+  --saber-secondary: rgba(210,195,195,1);
+  --saber-font: #e7e7e7;
+
+  --primary: var(--saber-primary);
+  --secondary: var(--saber-secondary);
+  --font: var(--saber-font);
+} 
+
+@media only screen and (min-width: 768px) {
+  
+}
+
+@media only screen and (min-width: 1200px) {
+  /* Scroll Bar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 20px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+/* position dots in carousel */
+.flickity-page-dots {
+  bottom: 0px;
+}
+
+/* white circles */
+.flickity-page-dots .dot {
+  height: 8px;
+  width: 30px;
+  margin: 0;
+  border-radius: 0;
+  border: 2px solid var(--secondary);
+}
+/* fill-in selected dot */
+.flickity-page-dots .dot.is-selected {
+  background: var(--primary);
+}
