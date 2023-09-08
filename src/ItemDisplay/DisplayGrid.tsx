@@ -1,3 +1,5 @@
+import BasicDisplayFive from "./Items/BasicDisplay/BasicDisplayFive";
+import BasicDisplayFour from "./Items/BasicDisplay/BasicDisplayFour";
 import BasicDisplayOne from "./Items/BasicDisplay/BasicDisplayOne";
 import BasicDisplayThree from "./Items/BasicDisplay/BasicDisplayThree";
 import BasicDisplayTwo from "./Items/BasicDisplay/BasicDisplayTwo";
@@ -9,6 +11,8 @@ const DisplayGrid = () => {
         <BasicDisplayOne />
         <BasicDisplayTwo />
         <BasicDisplayThree />
+        <BasicDisplayFour />
+        <BasicDisplayFive />
         <RetracableDisplay />
         <SpinDisplay />
     </div>)
