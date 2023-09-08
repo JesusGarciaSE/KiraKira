@@ -24,15 +24,6 @@
   h5 {
     @apply text-base mb-4 leading-none
   }
-  
-
-  section {
-    @apply flex-1 grid place-content-center;
-  }
-
-  p {
-    @apply mb-4;
-  }
 }
 
 /* Root Variables */
