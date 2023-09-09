@@ -30,6 +30,9 @@ export default {
       },
       maxWidth: {
         'half': '50%'
+      },
+      minWidth: {
+        'half': '50%'
       }
     },
   },
