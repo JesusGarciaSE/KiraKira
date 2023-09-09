@@ -1,5 +1,6 @@
 import { useState } from "react";
-import NavigationButton from "./NavigationButton";
+import { GiHamburgerMenu } from "react-icons/gi";
+import NavigationSideBar from "./NavigationSideBar";
 
 const NavigationBar = () => {
   const [active, setActive] = useState(false);
@@ -11,15 +12,19 @@ const NavigationBar = () => {
   };
   return (
     <div className=" flex flex-row justify-evenly bg-slate-500">
-        <NavigationButton
-          className="p-3 border border-solid border-black"
-          size="h-12 w-12"
-          color="text-blue-400"
-          active={active}
-          onClick={toggleMenu}
-        />
-        <p className="m-auto">Title</p>
-        <div className="my-auto"><p>end</p></div>
+      <div className="p-3" onClick={toggleMenu}>
+        <GiHamburgerMenu class="text-blue-300 h-12 w-12" />
+      </div>
+      <p className="m-auto">Title</p>
+      <div className="my-auto">
+        <p>end</p>
+      </div>
+      <NavigationSideBar
+        className="absolute top-0 left-0 z-20 bg-red-300"
+        color="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300"
+        active={active}
+        onClick={toggleMenu}
+      />
     </div>
   );
 };
