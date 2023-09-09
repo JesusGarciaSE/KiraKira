@@ -1,4 +1,4 @@
-import tape from "../../../assets/ItemImages/tape.webp";
+import tape from "../../../../assets/ItemImages/tape.webp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { LiaShoppingBasketSolid } from "react-icons/lia";
 import { BsFillShareFill } from "react-icons/bs";

@@ -1,4 +1,4 @@
-import tape from "../../../assets/ItemImages/tape.webp";
+import tape from "../../../../assets/ItemImages/tape.webp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { useState } from "react";
