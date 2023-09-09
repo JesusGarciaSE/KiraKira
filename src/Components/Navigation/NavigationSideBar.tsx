@@ -17,14 +17,9 @@ const NavigationSideBar: React.FC<INavigationSideBar> = ({
   color,
   onClick,
 }) => {
-  const sidebarStyle = {
-    transform: active ? "translateX(0)" : "translateX(-100%)",
-    transition: "transform 0.3s ease-in-out",
-  };
   return (
     <div
-      className={`flex flex-col min-h-screen min-w-full p-3 text-2xl text-center ${className} ${color}`}
-      style={sidebarStyle}
+      className={`flex flex-col min-h-screen min-w-full p-3 text-2xl text-center ease-in-out duration-300 ${className} ${color} ${active ? 'translate-x-0' : '-translate-x-full'}`}
     >
       <div className="flex flex-row">
         <GiNinjaStar className="text-red-400 h-12 w-12" onClick={onClick} />
