@@ -7,13 +7,18 @@ const NavigationBar = () => {
 
   const toggleMenu = (): void => {
     setActive((prevActive) => {
+    if (!prevActive) {
+        document.body.classList.add("overflow-hidden");
+      } else {
+        document.body.classList.remove("overflow-hidden");
+      }
       return !prevActive;
     });
   };
   return (
     <div className=" flex flex-row justify-evenly bg-slate-500">
       <div className="p-3" onClick={toggleMenu}>
-        <GiHamburgerMenu class="text-blue-300 h-12 w-12" />
+        <GiHamburgerMenu className="text-blue-300 h-12 w-12" />
       </div>
       <p className="m-auto">Title</p>
       <div className="my-auto">

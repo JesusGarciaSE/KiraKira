@@ -8,27 +8,35 @@ interface INavigationSideBar {
   onClick(): void;
 }
 
+const pages = ["Home", "Deals", "New", "Tape"];
+
 const NavigationSideBar: React.FC<INavigationSideBar> = ({
   className,
   active,
   color,
-  onClick
+  onClick,
 }) => {
-    const sidebarStyle = {
-        transform: active ? "translateX(0)" : "translateX(-100%)",
-        transition: "transform 0.3s ease-in-out",
-      };
+  const sidebarStyle = {
+    transform: active ? "translateX(0)" : "translateX(-100%)",
+    transition: "transform 0.3s ease-in-out",
+  };
   return (
     <div
-      className={`min-h-screen min-w-half p-3 ${className} ${color}`}
+      className={`flex flex-col min-h-screen min-w-full p-3 text-2xl text-center ${className} ${color}`}
       style={sidebarStyle}
     >
       <div className="flex flex-row">
-        <GiNinjaStar class="text-red-400 h-12 w-12" onClick={onClick}/>
+        <GiNinjaStar className="text-red-400 h-12 w-12" onClick={onClick} />
         <div className="grid content-center flex-1">
-          <p className="text-2xl text-center">KiraKira</p>
+          <p>KiraKira</p>
         </div>
       </div>
+      <ul className="flex-grow">
+        {pages.map((page, index)=> 
+        <li key={`${index}_${page}`} className="py-3">{page}</li>
+        )}
+      </ul>
+      <p className="text-sm">KiraKira, LLC 2023</p>
     </div>
   );
 };
