@@ -52,9 +52,9 @@ const BasicDisplaySix = () => {
         >
           <div className="w-5 h-5 mx-auto">
             {favorite ? (
-              <AiFillHeart class="text-red-600 h-6 w-6" />
+              <AiFillHeart className="text-red-600 h-6 w-6" />
             ) : (
-              <AiOutlineHeart class="text-red-600 h-6 w-6" />
+              <AiOutlineHeart className="text-red-600 h-6 w-6" />
             )}
           </div>
         </button>
