@@ -2,9 +2,33 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import HomePage from './Pages/HomePage.tsx'
+import DisplayGrid from './Components/ItemDisplay/DisplayGrid.tsx'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />
+      },
+      {
+        path: "/home",
+        element: <HomePage />
+      },
+      {
+        path: "/grid",
+        element: <DisplayGrid />
+      }
+    ]
+  }
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )

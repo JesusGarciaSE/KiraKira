@@ -1,4 +1,5 @@
 import { GiNinjaStar } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 interface INavigationSideBar {
   className?: string;
@@ -32,9 +33,13 @@ const NavigationSideBar: React.FC<INavigationSideBar> = ({
         </div>
       </div>
       <ul className="flex-grow">
-        {pages.map((page, index)=> 
-        <li key={`${index}_${page}`} className="py-3">{page}</li>
-        )}
+        {pages.map((page, index) => (
+          <Link to={page.toLowerCase()} key={`${index}_${page}`}>
+            <li className="py-3">
+              {page}
+            </li>
+          </Link>
+        ))}
       </ul>
       <p className="text-sm">KiraKira, LLC 2023</p>
     </div>
