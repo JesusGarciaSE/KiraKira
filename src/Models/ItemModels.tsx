@@ -1,5 +1,6 @@
 export interface IItem {
   name: string;
+  image: string;
   id: string;
   price: string;
   currency: string;

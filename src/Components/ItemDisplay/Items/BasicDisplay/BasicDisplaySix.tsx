@@ -1,4 +1,3 @@
-import tape from "../../../../assets/ItemImages/tape.webp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
 import { BasicDisplay } from "../../../../Models/ItemModels";
@@ -26,7 +25,7 @@ const BasicDisplaySix: React.FC<BasicDisplay> = ({ item, onClick }) => {
             </span>
           </p>
         </div>
-        <img src={tape} />
+        <img src={item.image} />
       </div>
 
       <div className="flex flex-row">

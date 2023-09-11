@@ -5,10 +5,12 @@ import RetracableDisplay from "./Items/RetractableDisplay/RetractableDisplay";
 import SpinDisplay from "./Items/SpinDisplay/SpinDisplay";
 import { IItem } from "../../Models/ItemModels";
 import ItemDetails from "./ItemDisplayModal/ItemDetails";
+import tape from "../../assets/ItemImages/tape.webp";
 
 const sampleItemData = [
   {
     name: "Purple Bunny",
+    image: tape,
     id: "washi_tape_purple_bunny",
     price: "6.99",
     currency: "USD",
@@ -20,6 +22,7 @@ const sampleItemData = [
   },
   {
     name: "Purple Bunny",
+    image: tape,
     id: "washi_tape_purple_bunny",
     price: "6.99",
     currency: "USD",
@@ -31,6 +34,7 @@ const sampleItemData = [
   },
   {
     name: "Purple Bunny",
+    image: tape,
     id: "washi_tape_purple_bunny",
     price: "6.99",
     currency: "USD",
@@ -42,6 +46,7 @@ const sampleItemData = [
   },
   {
     name: "Purple Bunny",
+    image: tape,
     id: "washi_tape_purple_bunny",
     price: "6.99",
     currency: "USD",
