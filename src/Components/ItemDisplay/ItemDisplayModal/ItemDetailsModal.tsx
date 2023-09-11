@@ -1,18 +1,24 @@
+import { AiOutlineCloseCircle } from "react-icons/ai";
+
 interface IItemDetailModal {
   isVisible: boolean;
   onClose(): void;
   children?: React.ReactNode;
 }
 
-const ItemDetailsModal: React.FC<IItemDetailModal> = ({ isVisible, onClose, children }) => {
+const ItemDetailsModal: React.FC<IItemDetailModal> = ({
+  isVisible,
+  onClose,
+  children,
+}) => {
   if (!isVisible) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm grid place-content-center">
-      <div className="flex flex-col">
-        <button className="text-white text-xl place-self-end" onClick={onClose}>X</button>
-        <div className="bg-white rounded-lg p-2 w-[250px]">
-          {children}
-        </div>
+      <div className="bg-pink-400 relative rounded-lg p-5 m-5">
+        <button className="absolute top-3 right-3" onClick={onClose}>
+          <AiOutlineCloseCircle className="h-12 w-12 text-purple-500" />
+        </button>
+        {children}
       </div>
     </div>
   );

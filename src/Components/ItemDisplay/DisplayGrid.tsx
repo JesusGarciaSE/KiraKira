@@ -12,6 +12,8 @@ const sampleItemData = [
     name: "Purple Bunny",
     image: tape,
     id: "washi_tape_purple_bunny",
+    description:
+      "A basic purple washi tape. You can stick it on things and it will make them cuter!",
     price: "6.99",
     currency: "USD",
     product: "tape",
@@ -24,6 +26,8 @@ const sampleItemData = [
     name: "Purple Bunny",
     image: tape,
     id: "washi_tape_purple_bunny",
+    description:
+      "A basic purple washi tape. You can stick it on things and it will make them cuter!",
     price: "6.99",
     currency: "USD",
     product: "tape",
@@ -36,6 +40,8 @@ const sampleItemData = [
     name: "Purple Bunny",
     image: tape,
     id: "washi_tape_purple_bunny",
+    description:
+      "A basic purple washi tape. You can stick it on things and it will make them cuter!",
     price: "6.99",
     currency: "USD",
     product: "tape",
@@ -48,6 +54,8 @@ const sampleItemData = [
     name: "Purple Bunny",
     image: tape,
     id: "washi_tape_purple_bunny",
+    description:
+      "A basic purple washi tape. You can stick it on things and it will make them cuter!",
     price: "6.99",
     currency: "USD",
     product: "tape",
