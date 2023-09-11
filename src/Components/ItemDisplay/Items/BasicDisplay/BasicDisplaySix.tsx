@@ -1,20 +1,11 @@
 import tape from "../../../../assets/ItemImages/tape.webp";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
+import { BasicDisplay } from "../../../../Models/ItemModels";
 
-const sampleItemData = {
-  name: "Purple Bunny",
-  id: "washi_tape_purple_bunny",
-  price: "6.99",
-  currency: "USD",
-  product: "tape",
-  onSale: true,
-  salePrice: "3.99",
-  inStock: true,
-  qtyInStock: 99,
-};
 
-const BasicDisplaySix = () => {
+
+const BasicDisplaySix: React.FC<BasicDisplay> = ({item}) => {
   const [favorite, setFavorite] = useState(false);
   const updateFavorite = () => {
     setFavorite((prevFavorite) => {
@@ -24,19 +15,19 @@ const BasicDisplaySix = () => {
   return (
     <div className="flex flex-col">
       <div className="text-xl text-blue-600 rounded-t-xl self-center h-16 w-full bg-gradient-to-b from-indigo-300 via-purple-300 to-pink-300">
-        <p className="text-center mt-2 mb-0">{sampleItemData.name}</p>
+        <p className="text-center mt-2 mb-0">{item.name}</p>
         <p className="text-sm text-center">
-          {sampleItemData.onSale && (
+          {item.onSale && (
             <span className="text-red-600 text-sm">
-              ${sampleItemData.salePrice}
+              ${item.salePrice}
             </span>
           )}{" "}
           <span
             className={`${
-              sampleItemData.onSale ? "line-through" : ""
+              item.onSale ? "line-through" : ""
             } text-gray-500`}
           >
-            ${sampleItemData.price}
+            ${item.price}
           </span>
         </p>
       </div>
