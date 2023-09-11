@@ -10,4 +10,6 @@ export interface IItem {
   qtyInStock: number;
 }
 
+export type DetailsDisplay = {item: IItem}
+
 export type BasicDisplay = { item: IItem } & {onClick(): void;};
