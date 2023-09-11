@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineAccountCircle } from "react-icons/md";
-import NavigationSideBar from "./NavigationSideBar";
+import NavigationSidebar from "./NavigationSideBar";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder_line.png";
 
 const NavigationBar = () => {
@@ -33,7 +33,7 @@ const NavigationBar = () => {
       <div className="pr-3 my-auto" onClick={toggleMenu}>
         <MdOutlineAccountCircle className="text-blue-600 h-12 w-12" />
       </div>
-      <NavigationSideBar
+      <NavigationSidebar
         className="absolute top-0 left-0 z-20 bg-red-300"
         color="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300"
         active={active}

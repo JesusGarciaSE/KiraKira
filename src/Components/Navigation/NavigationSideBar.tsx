@@ -2,7 +2,7 @@ import { GiNinjaStar } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 
-interface INavigationSideBar {
+interface INavigationSidebar {
   className?: string;
   active?: boolean;
   size?: string;
@@ -12,7 +12,7 @@ interface INavigationSideBar {
 
 const pages = ["Home", "Deals", "New", "Tape"];
 
-const NavigationSideBar: React.FC<INavigationSideBar> = ({
+const NavigationSidebar: React.FC<INavigationSidebar> = ({
   className,
   active,
   color,
@@ -55,4 +55,4 @@ const NavigationSideBar: React.FC<INavigationSideBar> = ({
   );
 };
 
-export default NavigationSideBar;
+export default NavigationSidebar;
