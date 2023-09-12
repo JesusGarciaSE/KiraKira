@@ -29,7 +29,8 @@ export default {
         'custom': '0 0 5px var(--primary)'
       },
       maxWidth: {
-        'half': '50%'
+        'half': '50%',
+        'screen': '100vw'
       },
       minWidth: {
         'half': '50%'

@@ -37,13 +37,13 @@ const NavigationBar = () => {
         <MdOutlineAccountCircle className="text-blue-600 h-12 w-12" />
       </div>
       <NavigationSidebar
-        className="absolute top-0 left-0 z-20 bg-red-300"
+        className="bg-red-300"
         color="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300"
         active={active}
         onClick={toggleMenu}
       />
       <UserNavigation
-        className="absolute top-0 left-0 z-20 bg-red-300"
+        className="bg-red-300"
         color="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300"
         active={userNavActive}
         onClick={toggleUserMenu}

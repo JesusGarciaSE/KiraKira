@@ -20,7 +20,7 @@ const UserNavigation: React.FC<INavigationSidebar> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col min-h-screen min-w-full p-3 text-2xl text-center ease-in-out duration-300 ${className} ${color} ${
+      className={`flex flex-col fixed min-h-screen min-w-full p-3 text-2xl text-center ease-in-out duration-300 ${className} ${color} ${
         active ? "translate-x-0" : "translate-x-full"
       }`}
     >
