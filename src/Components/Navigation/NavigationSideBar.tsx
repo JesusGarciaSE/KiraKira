@@ -26,7 +26,7 @@ const NavigationSidebar: React.FC<INavigationSidebar> = ({
     >
       <div className="relative">
         <GiNinjaStar
-          className="absolute z-10 text-red-400 h-12 w-12"
+          className="absolute z-10 text-navClose h-12 w-12"
           onClick={onClick}
         />
         <div className="grid content-center flex-1 relative">
@@ -38,7 +38,7 @@ const NavigationSidebar: React.FC<INavigationSidebar> = ({
               alt="Logo"
             />
           </div>
-          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl font-custom text-transparent bg-clip-text bg-clip bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
+          <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl font-custom text-transparent bg-clip-text bg-clip bg-gradient-to-br from-kira-slogo-start via-kira-slogo-through to-kira-slogo-end">
             KiraKira
           </p>
         </div>

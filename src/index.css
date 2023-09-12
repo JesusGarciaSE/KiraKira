@@ -40,6 +40,30 @@
   --primary: var(--saber-primary);
   --secondary: var(--saber-secondary);
   --font: var(--saber-font);
+
+  /* KiraKira color variables */
+  --bg-start: #a5b4fc; /* indigo-300 */
+  --bg-via: #d8b4fe; /* purple-300 */
+  --bg-end: #f9a8d4; /* pink-300 */
+
+  /* The logo for the sidebars, slightly lighter than the header */
+  --s-logo-start: #4f46e5; /* indigo-600 */
+  --s-logo-via: #9333ea; /* purple-600 */
+  --s-logo-end: #db2777; /* pink-600 */
+  
+  /* The header logo is slightly darker */
+  --h-logo-start: #4338ca; /* indigo-700 */
+  --h-logo-via: #7e22ce; /* purple-700 */
+  --h-logo-end: #be185d; /* pink-700 */
+
+  /* Colors for icons */
+  --nav-icon: #2563eb; /* blue-600 */
+  --nav-close: #be123c; /* rose-700 */
+  --favorite-fill: #e11d48; /* rose-600 */
+
+  /* Colors for text */
+  --sale: #dc2626; /* red-600 */
+  --strike: #6b7280; /* gray-500 */
 } 
 
 @media only screen and (min-width: 768px) {

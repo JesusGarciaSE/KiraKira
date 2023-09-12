@@ -21,9 +21,9 @@ const NavigationBar = () => {
   }
 
   return (
-    <div className=" flex flex-row justify-around bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300">
+    <div className=" flex flex-row justify-around bg-gradient-to-br from-kira-bg-start via-kira-bg-through to-kira-bg-end">
       <div className="pl-3 my-auto" onClick={toggleMenu}>
-        <GiHamburgerMenu className="text-blue-600 h-12 w-12" />
+        <GiHamburgerMenu className="text-navIcon h-12 w-12" />
       </div>
       <div className="w-48 mx-auto relative">
         <img
@@ -31,20 +31,18 @@ const NavigationBar = () => {
           src={logo}
           alt="Linear alternate logo"
         />
-        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-custom text-transparent bg-clip-text bg-clip bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700">KiraKira</p>
+        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-custom text-transparent bg-clip-text bg-clip bg-gradient-to-br from-kira-hlogo-start via-kira-hlogo-through to-kira-hlogo-end">KiraKira</p>
       </div>
       <div className="pr-3 my-auto" onClick={toggleUserMenu}>
-        <MdOutlineAccountCircle className="text-blue-600 h-12 w-12" />
+        <MdOutlineAccountCircle className="text-navIcon h-12 w-12" />
       </div>
       <NavigationSidebar
-        className="bg-red-300"
-        color="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300"
+        color=" bg-gradient-to-br from-kira-bg-start via-kira-bg-through to-kira-bg-end"
         active={active}
         onClick={toggleMenu}
       />
       <UserNavigation
-        className="bg-red-300"
-        color="bg-gradient-to-br from-indigo-300 via-purple-300 to-pink-300"
+        color="bg-gradient-to-br from-kira-bg-start via-kira-bg-through to-kira-bg-end"
         active={userNavActive}
         onClick={toggleUserMenu}
       />

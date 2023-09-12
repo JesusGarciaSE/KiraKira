@@ -20,7 +20,13 @@ export default {
         oldBlack: '#131313',
         primary: 'var(--primary)',
         secondary: 'var(--secondary)',
-        font: 'var(font)'
+        font: 'var(font)',
+        navIcon: 'var(--nav-icon)',
+        navClose: 'var(--nav-close)',
+        displayLabel: 'var(--nav-icon)',
+        saleHighlight: 'var(--sale)',
+        saleMarkdown: 'var(--strike)',
+        favoriteFill: 'var(--favorite-fill)'
       },
       fontFamily: {
         custom: ['Share Tech','Roboto', 'sans-serif']
@@ -34,6 +40,17 @@ export default {
       },
       minWidth: {
         'half': '50%'
+      },
+      gradientColorStops: {
+        'kira-bg-start': 'var(--bg-start)',
+        'kira-bg-through': 'var(--bg-via)',
+        'kira-bg-end': 'var(--bg-end)',
+        'kira-hlogo-start': 'var(--h-logo-start)',
+        'kira-hlogo-through': 'var(--h-logo-via)',
+        'kira-hlogo-end': 'var(--h-logo-end)',
+        'kira-slogo-start': 'var(--s-logo-start)',
+        'kira-slogo-through': 'var(--s-logo-via)',
+        'kira-slogo-end': 'var(--s-logo-end)',
       }
     },
   },
