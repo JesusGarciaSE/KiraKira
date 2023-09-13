@@ -21,7 +21,7 @@ const NavigationBar = () => {
   }
 
   return (
-    <div className=" flex flex-row justify-around shadow-md shadow-purple-800">
+    <div className="flex flex-row justify-around shadow-md shadow-purple-800">
       <div className="pl-3 my-auto" onClick={toggleMenu}>
         <GiHamburgerMenu className="text-navIcon h-12 w-12" />
       </div>

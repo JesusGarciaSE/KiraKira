@@ -1,6 +1,10 @@
 import { GiNinjaStar } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
+import Button from "../Buttons/Button";
+import { signOutUser } from "../../Services/FirebaseServices";
+import { useContext } from "react";
+import { AuthContext } from "../../Services/AuthContext";
 
 interface INavigationSidebar {
   className?: string;
@@ -10,7 +14,7 @@ interface INavigationSidebar {
   onClick(): void;
 }
 
-const pages = ["Account", "Cart", "Settings", "Logout"];
+const pages = ["Account", "Cart", "Settings"];
 
 const UserNavigation: React.FC<INavigationSidebar> = ({
   className,
@@ -18,15 +22,28 @@ const UserNavigation: React.FC<INavigationSidebar> = ({
   color,
   onClick,
 }) => {
+  const { loggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    signOutUser();
+    onClick();
+    navigate("/home");
+  };
+  const goToLogin = () => {
+    onClick();
+    navigate("/login");
+  };
+
   return (
     <div
-      className={`flex flex-col fixed min-h-screen min-w-full p-3 text-2xl text-center ease-in-out duration-300 ${className} ${color} ${
+      className={`z-10 flex flex-col fixed min-h-screen min-w-full p-3 text-2xl text-center ease-in-out duration-300 ${className} ${color} ${
         active ? "translate-x-0" : "translate-x-full"
       }`}
     >
       <div className="relative">
         <GiNinjaStar
-          className={`absolute z-10 right-1 text-navClose h-12 w-12`}
+          className={`absolute z-20 right-1 text-navClose h-12 w-12`}
           onClick={onClick}
         />
         <div className="grid content-center flex-1 relative">
@@ -45,11 +62,31 @@ const UserNavigation: React.FC<INavigationSidebar> = ({
       </div>
       <ul className="flex-grow">
         {pages.map((page, index) => (
-          <Link to={page.toLowerCase()} key={`${index}_${page}`}>
+          <Link
+            to={page.toLowerCase()}
+            onClick={onClick}
+            key={`${index}_${page}`}
+          >
             <li className="py-3">{page}</li>
           </Link>
         ))}
+        <li>
+          {loggedIn ? (
+            <Button
+              className="h-14 w-28 mx-auto p-2 shadow-lg bg-gradient-to-b from-kira-bg-end via-kira-bg-through to-kira-bg-start rounded-lg"
+              label="Logout"
+              onClick={logout}
+            />
+          ) : (
+            <Button
+              className="h-14 w-28 mx-auto p-2 shadow-lg bg-gradient-to-b from-kira-bg-end via-kira-bg-through to-kira-bg-start rounded-lg"
+              label="Login"
+              onClick={goToLogin}
+            />
+          )}
+        </li>
       </ul>
+
       <p className="text-sm">KiraKira, LLC 2023</p>
     </div>
   );

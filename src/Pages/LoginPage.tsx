@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../Components/Buttons/Button";
 import { loginWithEmailandPassword } from "../Services/FirebaseServices";
 import logo from "../assets/SiteImages/Kirakira_logo_placeholder.png";
+import { useNavigate } from "react-router-dom";
 
 interface ILoginPage {
   className: string;
@@ -14,15 +15,18 @@ interface UserLogin {
 
 const LoginPage: React.FC<ILoginPage> = ({ className }) => {
   const [user, setUser] = useState<UserLogin>({ email: "", password: "" });
-
+  const [error, setError] = useState(false);
+  const navigate = useNavigate()
   const handleLogin = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     loginWithEmailandPassword(user.email, user.password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log(user);
+        navigate("/home");
       })
       .catch((error) => {
+        setError(true);
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
@@ -68,7 +72,7 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
             <label htmlFor="password">Password</label>
             <input
               className="flex-grow text-black px-1 py-0.5"
-              type="email"
+              type="password"
               id="password"
               name="password"
               value={user.password}
@@ -84,6 +88,7 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
               handleLogin(event);
             }}
           />
+          {error && <p>Error</p>}
         </div>
       </div>
     </div>

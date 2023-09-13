@@ -5,6 +5,7 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomePage from './Pages/HomePage.tsx'
 import DisplayGrid from './Components/ItemDisplay/DisplayGrid.tsx'
+import LoginPage from './Pages/LoginPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: "/grid",
+        path: "/login",
+        element: <LoginPage className="flex-1 w-screen" />
+      },
+      {
+        path: "/tape",
         element: <DisplayGrid />
       }
     ]

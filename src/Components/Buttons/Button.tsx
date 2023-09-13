@@ -8,7 +8,7 @@ interface IButton {
 const Button: React.FC<IButton> = ({className, label, onClick, children }) => {
   return (
     <div
-      className={`${className}`}
+      className={`${className} flex flex-row`}
       onClick={onClick}
     >
       <div className="place-self-center mx-auto max-h-full max-w-full overflow-hidden">

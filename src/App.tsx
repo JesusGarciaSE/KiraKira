@@ -1,12 +1,15 @@
 // import DisplayGrid from "./Components/ItemDisplay/DisplayGrid";
+import { Outlet } from "react-router-dom";
 import NavigationBar from "./Components/Navigation/NavigationBar";
-import LoginPage from "./Pages/LoginPage";
+import AuthContextProvider from "./Services/AuthContext";
 
 function App() {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-br from-kira-bg-start via-kira-bg-through to-kira-bg-end">
-      <NavigationBar />
-      <LoginPage className="flex-1 w-screen"/>
+      <AuthContextProvider>
+        <NavigationBar />
+        <Outlet />
+      </AuthContextProvider>
     </div>
   );
 }
