@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Button from "../../Components/Buttons/Button";
-import { signupEnP } from "../../Services/FirebaseServices";
+import { GoogleProvider, auth } from "../../Services/FirebaseServices";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 import { useNavigate } from "react-router-dom";
 import { IUser } from "../SharedModels/SharedModels";
 import SignupErrors from "./SignupErrors";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { FcGoogle } from "react-icons/fc";
+import { GrApple } from "react-icons/gr";
+import { AiOutlineMail } from "react-icons/ai";
 
 interface ISignupPage {
   className: string;
@@ -20,7 +24,20 @@ const SignupPage: React.FC<ISignupPage> = ({ className }) => {
   ) => {
     e.preventDefault();
     setError(false);
-    signupEnP(user.email, user.password)
+    createUserWithEmailAndPassword(auth, user.email, user.password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log(user);
+        navigate("/home");
+      })
+      .catch((error) => {
+        setError(true);
+        console.log("error", error);
+      });
+  };
+
+  const loginWithGoogle = () => {
+    signInWithPopup(auth, GoogleProvider)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log(user);
@@ -55,7 +72,9 @@ const SignupPage: React.FC<ISignupPage> = ({ className }) => {
             </p>
           </div>
           <div className="flex gap-3 items-center">
-            <label htmlFor="email">Email</label>
+            <label className="w-1/3" htmlFor="email">
+              Email
+            </label>
             <input
               className="flex-grow text-black px-1 py-0.5"
               type="text"
@@ -68,7 +87,9 @@ const SignupPage: React.FC<ISignupPage> = ({ className }) => {
             />
           </div>
           <div className="flex gap-3 items-center">
-            <label htmlFor="password">Password</label>
+            <label className="w-1/3" htmlFor="password">
+              Password
+            </label>
             <input
               className="flex-grow text-black px-1 py-0.5"
               type="password"
@@ -82,20 +103,40 @@ const SignupPage: React.FC<ISignupPage> = ({ className }) => {
           </div>
           {error && <SignupErrors code="400" error="Sign up failed." />}
 
+          <Button
+            label="Signup"
+            className="h-14 w-full place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
+            onClick={(event) => {
+              handleRegistration(event);
+            }}
+          />
           <div className="flex flex-row justify-between">
             <Button
-              label="Goto Login"
-              className="h-14 w-28 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
-              onClick={() => navigate("/login")}
-            />
+              className="h-14 w-14 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
+              onClick={loginWithGoogle}
+            >
+              <FcGoogle className="h-10 w-10" />
+            </Button>
             <Button
-              label="Signup" 
-              className="h-14 w-28 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
+              className="h-14 w-14 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
+              onClick={() => {}}
+            >
+              <GrApple className="h-10 w-10" />
+            </Button>
+            <Button
+              className="h-14 w-14 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
               onClick={(event) => {
                 handleRegistration(event);
               }}
-            />
+            >
+              <AiOutlineMail className="h-10 w-10" />
+            </Button>
           </div>
+          <Button
+            label="Already have an account?"
+            className="h-14 w-full place-self-end p-2"
+            onClick={() => navigate("/login")}
+          />
         </div>
       </div>
     </div>

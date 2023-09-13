@@ -2,8 +2,9 @@ import { GiNinjaStar } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 import Button from "../Buttons/Button";
-import { signOutUser } from "../../Services/FirebaseServices";
+import { auth } from "../../Services/FirebaseServices";
 import { useAuth } from "../../Services/AuthContext";
+import { signOut } from "firebase/auth";
 
 interface INavigationSidebar {
   className?: string;
@@ -25,7 +26,15 @@ const UserNavigation: React.FC<INavigationSidebar> = ({
   const navigate = useNavigate();
 
   const logout = () => {
-    signOutUser();
+    signOut(auth)
+    .then(() => {
+      console.log("Signed Out Successful");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
     onClick();
     navigate("/home");
   };

@@ -1,11 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { GoogleAuthProvider, getAuth } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -25,26 +20,5 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const GoogleProvider = new GoogleAuthProvider();
 // const analytics = getAnalytics(app);
-
-//Test email asdf@gmail.com and password asdf1234
-export const loginEnP = (email: string, password: string) => {
-  return signInWithEmailAndPassword(auth, email, password);
-};
-
-//Test email asdf+1@gmail.com and password asdf1234
-export const signupEnP = (email: string, password: string) => {
-  return createUserWithEmailAndPassword(auth, email, password);
-};
-
-export const signOutUser = () => {
-  signOut(auth)
-    .then(() => {
-      console.log("Signed Out Successful");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-};
