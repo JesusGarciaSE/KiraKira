@@ -19,9 +19,7 @@ const SignupPage: React.FC<ISignupPage> = ({ className }) => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegistration = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const handleRegistration = (e: React.MouseEvent) => {
     e.preventDefault();
     setError(false);
     createUserWithEmailAndPassword(auth, user.email, user.password)
@@ -118,6 +116,7 @@ const SignupPage: React.FC<ISignupPage> = ({ className }) => {
               <FcGoogle className="h-10 w-10" />
             </Button>
             <Button
+              isDisabled={true}
               className="h-14 w-14 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
               onClick={() => {}}
             >

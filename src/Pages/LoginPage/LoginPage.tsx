@@ -19,7 +19,7 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleLogin = (e: React.MouseEvent) => {
     e.preventDefault();
     setError(false);
     signInWithEmailAndPassword(auth, user.email, user.password)
@@ -70,7 +70,9 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
             </p>
           </div>
           <div className="flex gap-3 items-center">
-            <label className="w-1/3" htmlFor="email">Email</label>
+            <label className="w-1/3" htmlFor="email">
+              Email
+            </label>
             <input
               className="flex-grow text-black px-1 py-0.5"
               type="text"
@@ -83,7 +85,9 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
             />
           </div>
           <div className="flex gap-3 items-center">
-            <label className="w-1/3" htmlFor="password">Password</label>
+            <label className="w-1/3" htmlFor="password">
+              Password
+            </label>
             <input
               className="flex-grow text-black px-1 py-0.5"
               type="password"
@@ -113,6 +117,7 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
               <FcGoogle className="h-10 w-10" />
             </Button>
             <Button
+              isDisabled={true}
               className="h-14 w-14 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
               onClick={() => {}}
             >

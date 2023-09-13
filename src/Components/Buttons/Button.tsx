@@ -1,12 +1,14 @@
 interface IButton {
+  isDisabled?: boolean;
   className?: string;
   textOptions?: string;
   label?: string;
   children?: React.ReactNode;
-  onClick?(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
+  onClick?(e: React.MouseEvent): void;
 }
 
 const Button: React.FC<IButton> = ({
+  isDisabled,
   className,
   textOptions,
   label,
@@ -14,7 +16,11 @@ const Button: React.FC<IButton> = ({
   children,
 }) => {
   return (
-    <div className={`${className} flex flex-row`} onClick={onClick}>
+    <button
+      disabled={isDisabled}
+      className={`${className} flex flex-row`}
+      onClick={onClick}
+    >
       <div className="place-self-center mx-auto max-h-full max-w-full overflow-hidden">
         {children ? (
           children
@@ -26,7 +32,7 @@ const Button: React.FC<IButton> = ({
           </p>
         )}
       </div>
-    </div>
+    </button>
   );
 };
 
