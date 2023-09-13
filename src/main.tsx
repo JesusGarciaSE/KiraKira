@@ -5,7 +5,7 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomePage from './Pages/HomePage.tsx'
 import DisplayGrid from './Components/ItemDisplay/DisplayGrid.tsx'
-import LoginPage from './Pages/LoginPage.tsx'
+import LoginPage from './Pages/LoginPage/LoginPage.tsx'
 
 const router = createBrowserRouter([
   {
