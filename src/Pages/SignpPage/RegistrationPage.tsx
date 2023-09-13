@@ -1,31 +1,30 @@
 import { useState } from "react";
 import Button from "../../Components/Buttons/Button";
-import { loginEnP } from "../../Services/FirebaseServices";
+import { loginWithEmailandPassword } from "../../Services/FirebaseServices";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 import { useNavigate } from "react-router-dom";
-import LoginErrors from "./LoginErrors";
 import { IUser } from "../SharedModels/SharedModels";
 
-interface ILoginPage {
+interface IRegistrationPage {
   className: string;
 }
 
-const LoginPage: React.FC<ILoginPage> = ({ className }) => {
+const RegistrationPage: React.FC<IRegistrationPage> = ({ className }) => {
   const [user, setUser] = useState<IUser>({ email: "", password: "" });
-  const [error, setError] = useState(false);
+//   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-    setError(false);
-    loginEnP(user.email, user.password)
+    // setError(false);
+    loginWithEmailandPassword(user.email, user.password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log(user);
         navigate("/home");
       })
       .catch((error) => {
-        setError(true);
+        // setError(true);
         console.log("error", error);
       });
   };
@@ -78,27 +77,20 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
               }}
             />
           </div>
-          {error && (
+          {/* {error && (
             <LoginErrors code="400" error="Invalid email or password." />
-          )}
-          <div className="flex flex-row justify-between">
-            <Button
-              label="Goto Signup"
-              className="h-14 w-28 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
-              onClick={() => navigate("/signup")}
-            />
-            <Button
-              label="Login"
-              className="h-14 w-28 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
-              onClick={(event) => {
-                handleLogin(event);
-              }}
-            />
-          </div>
+          )} */}
+          <Button
+            label="Login"
+            className="h-14 w-28 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
+            onClick={(event) => {
+              handleLogin(event);
+            }}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;

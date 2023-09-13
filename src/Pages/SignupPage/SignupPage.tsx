@@ -1,24 +1,26 @@
 import { useState } from "react";
 import Button from "../../Components/Buttons/Button";
-import { loginEnP } from "../../Services/FirebaseServices";
+import { signupEnP } from "../../Services/FirebaseServices";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 import { useNavigate } from "react-router-dom";
-import LoginErrors from "./LoginErrors";
 import { IUser } from "../SharedModels/SharedModels";
+import SignupErrors from "./SignupErrors";
 
-interface ILoginPage {
+interface ISignupPage {
   className: string;
 }
 
-const LoginPage: React.FC<ILoginPage> = ({ className }) => {
+const SignupPage: React.FC<ISignupPage> = ({ className }) => {
   const [user, setUser] = useState<IUser>({ email: "", password: "" });
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleRegistration = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setError(false);
-    loginEnP(user.email, user.password)
+    signupEnP(user.email, user.password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log(user);
@@ -78,20 +80,19 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
               }}
             />
           </div>
-          {error && (
-            <LoginErrors code="400" error="Invalid email or password." />
-          )}
+          {error && <SignupErrors code="400" error="Sign up failed." />}
+
           <div className="flex flex-row justify-between">
             <Button
-              label="Goto Signup"
+              label="Goto Login"
               className="h-14 w-28 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/login")}
             />
             <Button
-              label="Login"
+              label="Signup" 
               className="h-14 w-28 place-self-end p-2 shadow-lg bg-gradient-to-b from-kira-bg-start via-kira-bg-through to-kira-bg-end rounded-lg flex flex-row"
               onClick={(event) => {
-                handleLogin(event);
+                handleRegistration(event);
               }}
             />
           </div>
@@ -101,4 +102,4 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomePage from './Pages/HomePage.tsx'
 import DisplayGrid from './Components/ItemDisplay/DisplayGrid.tsx'
 import LoginPage from './Pages/LoginPage/LoginPage.tsx'
+import SignupPage from './Pages/SignupPage/SignupPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage className="flex-1 w-screen" />
+      },
+      {
+        path: "/signup",
+        element: <SignupPage className="flex-1 w-screen" />
       },
       {
         path: "/tape",
