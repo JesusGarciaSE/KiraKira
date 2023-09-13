@@ -21,6 +21,7 @@ const LoginPage: React.FC<ILoginPage> = ({ className }) => {
 
   const handleLogin = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
+    setError(false);
     loginWithEmailandPassword(user.email, user.password)
       .then((userCredentials) => {
         const user = userCredentials.user;
