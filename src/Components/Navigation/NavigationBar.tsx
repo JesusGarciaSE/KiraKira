@@ -21,7 +21,7 @@ const NavigationBar = () => {
   }
 
   return (
-    <div className=" flex flex-row justify-around bg-gradient-to-br from-kira-bg-start via-kira-bg-through to-kira-bg-end">
+    <div className=" flex flex-row justify-around shadow-md shadow-purple-800">
       <div className="pl-3 my-auto" onClick={toggleMenu}>
         <GiHamburgerMenu className="text-navIcon h-12 w-12" />
       </div>
