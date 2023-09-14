@@ -1,6 +1,6 @@
 import { GiNinjaStar } from "react-icons/gi";
-import { Link } from "react-router-dom";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
+import { Link } from "react-router-dom";
 
 interface INavigationSidebar {
   className?: string;
@@ -10,8 +10,32 @@ interface INavigationSidebar {
   onClick(): void;
 }
 
-const pages = ["Home", "Deals", "New", "Tape"];
-
+const pages = [
+  { route: "home", label: "Home" },
+  {
+    route: "new",
+    label: "New",
+  },
+  {
+    route: "sale",
+    label: "On Sale",
+  },
+  {
+    route: "product",
+    label: "Stickers",
+    params: "sticker",
+  },
+  {
+    route: "product",
+    label: "Magnets",
+    params: "magnet",
+  },
+  {
+    route: "product",
+    label: "Bookmarks",
+    params: "bookmark",
+  },
+];
 const NavigationSidebar: React.FC<INavigationSidebar> = ({
   className,
   active,
@@ -43,10 +67,14 @@ const NavigationSidebar: React.FC<INavigationSidebar> = ({
           </p>
         </div>
       </div>
-      <ul className="flex-grow">
+      <ul className={`flex-grow`}>
         {pages.map((page, index) => (
-          <Link to={page.toLowerCase()} onClick={onClick} key={`${index}_${page}`}>
-            <li className="py-3">{page}</li>
+          <Link
+            to={`${page.route}\\${page.params ? page.params : ""}`}
+            onClick={onClick}
+            key={`${index}_${page}`}
+          >
+            <li className="py-3">{page.label}</li>
           </Link>
         ))}
       </ul>

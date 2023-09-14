@@ -1,7 +1,7 @@
 export interface IItem {
   name: string;
   image: string;
-  attributes: IAttribute;
+  attributes: string[];
   description: string;
   id: string;
   price: string;
@@ -11,12 +11,6 @@ export interface IItem {
   salePrice: string;
   inStock: boolean;
   quantity: number;
-}
-
-interface IAttribute {
-  features: string;
-  color: string;
-  licensed: boolean;
 }
 
 export interface IUser {
