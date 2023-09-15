@@ -50,7 +50,7 @@ const CollectionsPage: React.FC<ICollectionsPage> = ({ route }) => {
 
       setProductList(products);
     });
-  }, [category]);
+  }, [category, route]);
 
   return <DisplayGrid products={productList} />;
 };
