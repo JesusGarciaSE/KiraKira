@@ -3,7 +3,7 @@ import Button from "../../Components/Buttons/Button";
 import { GoogleProvider, auth } from "../../Services/FirebaseServices";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "../SharedModels/SharedModels";
+import { IUser } from "../../Models/UserModels";
 import SignupErrors from "./SignupErrors";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";

@@ -1,4 +1,4 @@
-import { IErrors } from "../SharedModels/SharedModels";
+import { IErrors } from "../../Models/UserModels";
 
 const LoginErrors: React.FC<IErrors> = ({ code, error }) => {
   return (
