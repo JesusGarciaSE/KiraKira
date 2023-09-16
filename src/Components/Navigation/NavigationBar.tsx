@@ -7,11 +7,14 @@ import logo from "../../assets/SiteImages/Kirakira_logo_placeholder_line.png";
 import UserNavigation from "./UserNavigation";
 import { useAuth } from "../../Services/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../Services/CartContext";
+import { NavigationCart } from "./NavigationCart";
 
 const NavigationBar = () => {
   const [active, setActive] = useState(false);
   const [userNavActive, setUserNavActive] = useState(false);
   const { loggedIn } = useAuth();
+  const { shoppingCart, cartSize } = useCart();
   const navigate = useNavigate();
   const toggleMenu = (): void => {
     setActive((prevActive) => {
@@ -45,7 +48,11 @@ const NavigationBar = () => {
       </div>
       <div className="pr-3 my-auto" onClick={handleAccountClick}>
         {loggedIn ? (
-          <MdOutlineAccountCircle className="text-navIcon h-12 w-12" />
+          shoppingCart.length > 0 ? (
+            <NavigationCart cartSize={cartSize} />
+          ) : (
+            <MdOutlineAccountCircle className="text-navIcon h-12 w-12" />
+          )
         ) : (
           <TbLogin2 className="text-navIcon h-12 w-12" />
         )}

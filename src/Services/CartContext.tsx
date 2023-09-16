@@ -1,15 +1,17 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { ICartItem } from "../Models/ItemModels";
 import { IParentComponent } from "../Models/ComponentModels";
 
 interface ICartContext {
   shoppingCart: ICartItem[];
+  cartSize: number;
   addToCart(item: ICartItem): void;
   removeFromCart(itemId: string): void;
 }
 
 export const CartContext = createContext<ICartContext>({
   shoppingCart: [],
+  cartSize: 0,
   addToCart: () => {},
   removeFromCart: () => {},
 });
@@ -19,19 +21,34 @@ export const useCart = (): ICartContext => {
 export const CartContextProvider: React.FC<IParentComponent> = ({
   children,
 }) => {
-  const [shoppingCart, setShoppingCart] = useState<ICartItem[]>([]);
+  const checkLocalCart = (): ICartItem[] => {
+    const localCart = localStorage.getItem("shoppingCart");
+    if (localCart) {
+      return JSON.parse(localCart);
+    }
+    return [];
+  };
+
+  const [shoppingCart, setShoppingCart] = useState<ICartItem[]>(checkLocalCart);
+  const [cartSize, setCartSize] = useState(0);
 
   useEffect(() => {
     localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
   }, [shoppingCart]);
 
+  useMemo(() => {
+    let total = 0;
+    shoppingCart.forEach((item) => (total += item.quantity));
+    setCartSize(total);
+  }, [shoppingCart]);
+
   const addToCart = (newItem: ICartItem) => {
-    console.log("CartContext, Add to cart called");
     setShoppingCart((prevCart) => {
+      console.log("prevCart", prevCart);
       if (prevCart.some((item) => item.id === newItem.id)) {
         const index = prevCart.map((e) => e.id).indexOf(newItem.id);
-        console.log("shoppingCart contains an instance of", prevCart[index]);
         prevCart[index].quantity += 1;
+        console.log("current cart", shoppingCart);
         return [...prevCart];
       }
       return [...prevCart, newItem];
@@ -46,6 +63,7 @@ export const CartContextProvider: React.FC<IParentComponent> = ({
 
   const CartObj = {
     shoppingCart,
+    cartSize,
     addToCart,
     removeFromCart,
   };
