@@ -42,12 +42,10 @@ const CollectionsPage: React.FC<ICollectionsPage> = ({ route }) => {
     const querySnapshot = getDocs(queryProducts!);
     querySnapshot.then((response) => {
       response.docs.forEach((doc) => {
-        console.log(doc.data());
         if (doc.data) {
           products.push(doc.data() as IItem);
         }
       });
-
       setProductList(products);
     });
   }, [category, route]);
