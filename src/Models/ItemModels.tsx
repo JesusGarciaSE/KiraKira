@@ -1,3 +1,5 @@
+import { IParentComponent } from "./ComponentModels";
+
 export interface IItem {
   name: string;
   image: string;
@@ -17,6 +19,36 @@ export interface IUser {
   userID: string;
 }
 
-export type DetailsDisplay = { item: IItem };
+export interface ICartItem {
+  name: string;
+  id: string;
+  image: string;
+  cost: string;
+  quantity: number;
+}
 
-export type BasicDisplay = { item: IItem } & { onClick(): void };
+export interface IDisplayGrid {
+  products: IItem[];
+}
+
+export interface DetailsDisplay {
+  item: IItem;
+}
+
+export interface IItemSimplified {
+  name: string;
+  id: string;
+  image: string;
+  cost: string;
+  quantity: number;
+}
+
+export type BasicDisplay = { item: IItem } & {
+  onClick(): void;
+  onAdd(item: ICartItem): void;
+};
+
+export interface IItemDetailModal extends IParentComponent {
+  isVisible: boolean;
+  onClose(): void;
+}

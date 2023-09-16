@@ -1,14 +1,7 @@
 import { GiNinjaStar } from "react-icons/gi";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 import { Link } from "react-router-dom";
-
-interface INavigationSidebar {
-  className?: string;
-  active?: boolean;
-  size?: string;
-  color?: string;
-  onClick(): void;
-}
+import { INavigationSidebar } from "../../Models/ComponentModels";
 
 const pages = [
   { route: "home", label: "Home" },

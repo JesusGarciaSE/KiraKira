@@ -9,12 +9,9 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { GrApple } from "react-icons/gr";
 import { AiOutlineMail } from "react-icons/ai";
+import { ICustomizableComponent } from "../../Models/ComponentModels";
 
-interface ILoginPage {
-  className: string;
-}
-
-const LoginPage: React.FC<ILoginPage> = ({ className }) => {
+const LoginPage: React.FC<ICustomizableComponent> = ({ className }) => {
   const [user, setUser] = useState<IUser>({ email: "", password: "" });
   const [error, setError] = useState(false);
   const navigate = useNavigate();

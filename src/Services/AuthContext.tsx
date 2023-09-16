@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth as firebaseAuth } from "../Services/FirebaseServices";
 import { createContext, useContext, useEffect, useState } from "react";
+import { IParentComponent } from "../Models/ComponentModels";
 
 interface IAuthContext {
   loggedIn: boolean;
@@ -12,11 +13,7 @@ export const useAuth = (): IAuthContext => {
   return useContext(AuthContext);
 };
 
-interface IAuthContextProvider {
-  children: React.ReactNode;
-}
-
-export const AuthContextProvider: React.FC<IAuthContextProvider> = ({
+export const AuthContextProvider: React.FC<IParentComponent> = ({
   children,
 }) => {
   const [auth, setAuth] = useState<IAuthContext>({ loggedIn: false });

@@ -1,10 +1,5 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
-
-interface IItemDetailModal {
-  isVisible: boolean;
-  onClose(): void;
-  children?: React.ReactNode;
-}
+import { IItemDetailModal } from "../../../Models/ItemModels";
 
 const ItemDetailsModal: React.FC<IItemDetailModal> = ({
   isVisible,

@@ -1,11 +1,5 @@
-interface IButton {
-  isDisabled?: boolean;
-  className?: string;
-  textOptions?: string;
-  label?: string;
-  children?: React.ReactNode;
-  onClick?(e: React.MouseEvent): void;
-}
+import { IButton } from "../../Models/ComponentModels";
+
 
 const Button: React.FC<IButton> = ({
   isDisabled,

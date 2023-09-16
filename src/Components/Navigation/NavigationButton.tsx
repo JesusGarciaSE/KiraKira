@@ -1,12 +1,5 @@
 import { GiHamburgerMenu, GiNinjaStar } from "react-icons/gi";
-
-interface INavigationButton {
-  className?: string;
-  active?: boolean;
-  size?: string;
-  color?: string;
-  onClick(): void;
-}
+import { INavigationButton } from "../../Models/ComponentModels";
 
 const NavigationButton: React.FC<INavigationButton> = ({
   className,

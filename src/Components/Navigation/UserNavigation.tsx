@@ -5,14 +5,7 @@ import Button from "../Buttons/Button";
 import { auth } from "../../Services/FirebaseServices";
 import { useAuth } from "../../Services/AuthContext";
 import { signOut } from "firebase/auth";
-
-interface INavigationSidebar {
-  className?: string;
-  active?: boolean;
-  size?: string;
-  color?: string;
-  onClick(): void;
-}
+import { INavigationSidebar } from "../../Models/ComponentModels";
 
 const pages = ["Account", "Cart", "Settings"];
 
@@ -27,14 +20,14 @@ const UserNavigation: React.FC<INavigationSidebar> = ({
 
   const logout = () => {
     signOut(auth)
-    .then(() => {
-      console.log("Signed Out Successful");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
+      .then(() => {
+        console.log("Signed Out Successful");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
     onClick();
     navigate("/home");
   };
