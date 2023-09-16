@@ -3,16 +3,14 @@ import ItemDetailsModal from "./ItemDisplayModal/ItemDetailsModal";
 import BasicDisplaySix from "./Items/BasicDisplay/BasicDisplaySix";
 import RetracableDisplay from "./Items/RetractableDisplay/RetractableDisplay";
 import SpinDisplay from "./Items/SpinDisplay/SpinDisplay";
-import { IItem } from "../../Models/ItemModels";
+import { ICartItem, IDisplayGrid, IItem } from "../../Models/ItemModels";
 import ItemDetails from "./ItemDisplayModal/ItemDetails";
-
-interface IDisplayGrid {
-  products: IItem[];
-}
+import { useCart } from "../../Services/CartContext";
 
 const DisplayGrid: React.FC<IDisplayGrid> = ({ products }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IItem | null>(null);
+  const { addToCart } = useCart();
   const showItemModal = (item: IItem) => {
     setSelectedItem(item);
     setShowModal(true);
@@ -21,6 +19,12 @@ const DisplayGrid: React.FC<IDisplayGrid> = ({ products }) => {
     setSelectedItem(null); // Clear the selected item
     setShowModal(false);
   };
+
+  const addItemToCart = (item: ICartItem) => {
+    console.log("Display Grid addItem To Cart Called, calling addToCart");
+    addToCart(item);
+  };
+
   return (
     <div className="grid grid-cols-2 gap-4 p-4 overflow-y-auto">
       <ItemDetailsModal isVisible={showModal} onClose={closeItemModal}>
@@ -31,6 +35,7 @@ const DisplayGrid: React.FC<IDisplayGrid> = ({ products }) => {
           key={`${item.id}_${index}`}
           item={item}
           onClick={() => showItemModal(item)}
+          onAdd={addItemToCart}
         />
       ))}
 
