@@ -1,5 +1,5 @@
 export interface ICustomizableComponent {
-  className: string;
+  className?: string;
 }
 
 export interface IParentComponent {

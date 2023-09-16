@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { GiHamburgerMenu, GiScrollQuill } from "react-icons/gi";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { TbLogin2 } from "react-icons/tb";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import NavigationSidebar from "./NavigationSideBar";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder_line.png";
@@ -11,7 +12,7 @@ const NavigationBar = () => {
   const [active, setActive] = useState(false);
   const [userNavActive, setUserNavActive] = useState(false);
   const { loggedIn } = useAuth();
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const toggleMenu = (): void => {
     setActive((prevActive) => {
       return !prevActive;
@@ -24,7 +25,7 @@ const navigate = useNavigate();
   };
 
   const handleAccountClick = () => {
-    loggedIn ? toggleUserMenu() : navigate("/signup")
+    loggedIn ? toggleUserMenu() : navigate("/signup");
   };
 
   return (
@@ -46,7 +47,7 @@ const navigate = useNavigate();
         {loggedIn ? (
           <MdOutlineAccountCircle className="text-navIcon h-12 w-12" />
         ) : (
-          <GiScrollQuill className="text-navIcon h-12 w-12" />
+          <TbLogin2 className="text-navIcon h-12 w-12" />
         )}
       </div>
       <NavigationSidebar
