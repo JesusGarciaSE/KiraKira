@@ -7,6 +7,7 @@ interface ICartContext {
   cartSize: number;
   addToCart(item: ICartItem): void;
   removeFromCart(itemId: string): void;
+  updateQuantity(itemId: string, quantity: number): void;
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -14,6 +15,7 @@ export const CartContext = createContext<ICartContext>({
   cartSize: 0,
   addToCart: () => {},
   removeFromCart: () => {},
+  updateQuantity: () => {},
 });
 export const useCart = (): ICartContext => {
   return useContext(CartContext);
@@ -55,6 +57,14 @@ export const CartContextProvider: React.FC<IParentComponent> = ({
     });
   };
 
+  const updateQuantity = (itemId: string, quantity: number) => {
+    setShoppingCart((prevCart) => {
+      const index = prevCart.map((e) => e.id).indexOf(itemId);
+      prevCart[index].quantity = quantity;
+      return [...prevCart];
+    });
+  };
+
   const removeFromCart = (itemId: string) => {
     setShoppingCart((prevCart) => {
       return prevCart.filter((item) => item.id !== itemId);
@@ -66,6 +76,7 @@ export const CartContextProvider: React.FC<IParentComponent> = ({
     cartSize,
     addToCart,
     removeFromCart,
+    updateQuantity,
   };
 
   return (

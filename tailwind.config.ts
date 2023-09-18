@@ -26,7 +26,7 @@ export default {
         displayLabel: 'var(--nav-icon)',
         saleHighlight: 'var(--sale)',
         saleMarkdown: 'var(--strike)',
-        favoriteFill: 'var(--favorite-fill)'
+        favoriteFill: 'var(--favorite-fill)',
       },
       fontFamily: {
         custom: ['Share Tech','Roboto', 'sans-serif']
@@ -40,6 +40,9 @@ export default {
       },
       minWidth: {
         'half': '50%'
+      },
+      borderWidth: {
+        '1': '1px'
       },
       gradientColorStops: {
         'kira-bg-start': 'var(--bg-start)',
