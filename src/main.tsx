@@ -7,7 +7,8 @@ import HomePage from "./Pages/HomePage.tsx";
 import LoginPage from "./Pages/LoginPage/LoginPage.tsx";
 import SignupPage from "./Pages/SignupPage/SignupPage.tsx";
 import CollectionsPage from "./Pages/CollectionsPage/CollectionsPage.tsx";
-import CartPage from "./Pages/CartPage.tsx/CartPage.tsx";
+import CartPage from "./Pages/CartPage/CartPage.tsx";
+import CheckoutResultPage from "./Pages/CheckoutPage/CheckoutResultPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartPage className="flex-1 w-screen" />,
+      },
+      {
+        path: "/checkout/:status",
+        element: <CheckoutResultPage className="flex-1 w-screen" />,
       },
     ],
   },

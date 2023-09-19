@@ -1,8 +1,6 @@
 import { useState } from "react";
 import ItemDetailsModal from "./ItemDisplayModal/ItemDetailsModal";
 import BasicDisplaySix from "./Items/BasicDisplay/BasicDisplaySix";
-import RetracableDisplay from "./Items/RetractableDisplay/RetractableDisplay";
-import SpinDisplay from "./Items/SpinDisplay/SpinDisplay";
 import { ICartItem, IDisplayGrid, IItem } from "../../Models/ItemModels";
 import { useCart } from "../../Services/CartContext";
 
@@ -43,9 +41,6 @@ const DisplayGrid: React.FC<IDisplayGrid> = ({ products }) => {
           onAdd={addItemToCart}
         />
       ))}
-
-      <RetracableDisplay />
-      <SpinDisplay />
     </div>
   );
 };
