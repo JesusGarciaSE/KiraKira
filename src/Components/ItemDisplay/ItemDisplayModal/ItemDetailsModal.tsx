@@ -9,7 +9,7 @@ const ItemDetailsModal: React.FC<IItemModal> = ({
   if (!isVisible) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm grid place-content-center">
-      <div className="bg-pink-400 relative rounded-lg p-5 m-5">
+      <div className="bg-pink-400 relative rounded-lg p-5 m-5 overflow-x-hidden overflow-y-auto">
         <button className="absolute top-3 right-3" onClick={onClose}>
           <AiOutlineCloseCircle className="h-12 w-12 text-purple-500" />
         </button>
