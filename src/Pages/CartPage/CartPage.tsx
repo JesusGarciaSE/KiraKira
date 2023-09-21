@@ -5,16 +5,27 @@ import { ICustomizableComponent } from "../../Models/ComponentModels";
 import { useCart } from "../../Services/CartContext";
 import CartItem from "./CartItem";
 import { functions } from "../../Services/FirebaseServices";
+interface sampleData {
+  text: string;
+}
+interface testPayload {
+  cartSize: number;
+  cartSubtotal: string;
+}
 
 const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
   const { shoppingCart, cartSize, cartSubtotal } = useCart();
+  const testPayload = {
+    cartSize: cartSize,
+    cartSubtotal: cartSubtotal,
+  };
 
   const checkOut = () => {
-    const helloWorld = httpsCallable(functions, "helloworld");
-    helloWorld({ text: "helloWorld" })
+    const helloWorld = httpsCallable<testPayload, sampleData>(functions, "testresponse");
+    helloWorld(testPayload)
       .then((result) => {
         const data = result.data;
-        console.log(data);
+        console.log('front end', data.text);
       })
       .catch((error) => {
         console.log("error", error);
