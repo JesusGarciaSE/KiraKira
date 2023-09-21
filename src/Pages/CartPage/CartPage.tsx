@@ -1,14 +1,24 @@
 // import { useAuth } from "../../Services/AuthContext";
+import { httpsCallable } from "firebase/functions";
 import Button from "../../Components/Buttons/Button";
 import { ICustomizableComponent } from "../../Models/ComponentModels";
 import { useCart } from "../../Services/CartContext";
 import CartItem from "./CartItem";
+import { functions } from "../../Services/FirebaseServices";
 
 const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
   const { shoppingCart, cartSize, cartSubtotal } = useCart();
 
   const checkOut = () => {
-    console.log("checkout");
+    const helloWorld = httpsCallable(functions, "helloworld");
+    helloWorld({ text: "helloWorld" })
+      .then((result) => {
+        const data = result.data;
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   return (

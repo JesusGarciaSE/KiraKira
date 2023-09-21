@@ -6,18 +6,24 @@
  *
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
-const express = require("express");
-import { Express, Request, Response } from "express";
-import { onRequest } from "firebase-functions/v2/https";
+import {
+  CallableRequest,
+  onCall,
+  onRequest,
+} from "firebase-functions/v2/https";
 import { logger } from "firebase-functions";
+import * as express from "express";
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
-const app: Express = express();
-// const PORT: Number = 4040;
 
-app.get("/", (req: Request, res: Response) => {});
-exports.helloworld = onRequest((request: Request, response: Response) => {
-  logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
-});
+exports.testresponse = onCall((req: CallableRequest) => {});
+
+exports.helloworld = onRequest(
+  (request: express.Request, response: express.Response): void | Promise<void> => {
+    
+    logger.info("test", request);
+    logger.info("Hello logs!", { structuredData: true });
+    response.json({ data: "hello world" });
+  }
+);
