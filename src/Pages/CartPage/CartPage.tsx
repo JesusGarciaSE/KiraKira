@@ -1,35 +1,52 @@
 // import { useAuth } from "../../Services/AuthContext";
-import { httpsCallable } from "firebase/functions";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import Button from "../../Components/Buttons/Button";
 import { ICustomizableComponent } from "../../Models/ComponentModels";
 import { useCart } from "../../Services/CartContext";
 import CartItem from "./CartItem";
-import { functions } from "../../Services/FirebaseServices";
-interface sampleData {
-  text: string;
-}
-interface testPayload {
-  cartSize: number;
-  cartSubtotal: string;
+import { firestore } from "../../Services/FirebaseServices";
+import { useAuth } from "../../Services/AuthContext";
+
+interface IOrder {
+  [id: string]: number;
 }
 
 const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
   const { shoppingCart, cartSize, cartSubtotal } = useCart();
-  const testPayload = {
-    cartSize: cartSize,
-    cartSubtotal: cartSubtotal,
-  };
+  const { userId } = useAuth();
 
-  const checkOut = () => {
-    const helloWorld = httpsCallable<testPayload, sampleData>(functions, "testresponse");
-    helloWorld(testPayload)
-      .then((result) => {
-        const data = result.data;
-        console.log('front end', data.text);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+  const checkOut = async () => {
+    const order = shoppingCart.reduce<IOrder>((order, item) => {
+      order[item.id] = item.quantity;
+      return order;
+    }, {});
+    console.log('order', order);
+    const orderRef = await addDoc(collection(firestore, "Orders"), order);
+    console.log('order created with id', orderRef.id);
+    const user = userId ? userId : "";
+    const userRef = doc(firestore, "Users", user);
+    if (userRef) {
+      updateDoc(userRef, {
+        orders: arrayUnion(orderRef.id),
+      }).then(() => console.log("order created"));
+    } else {
+      console.log("no user");
+    }
+    // const helloWorld = httpsCallable<testPayload, sampleData>(functions, "testresponse");
+    // helloWorld(testPayload)
+    //   .then((result) => {
+    //     const data = result.data;
+    //     console.log('front end', data.text);
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
   };
 
   return (
