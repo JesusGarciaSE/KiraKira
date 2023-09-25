@@ -5,7 +5,7 @@ import { IParentComponent } from "../Models/ComponentModels";
 interface ICartContext {
   shoppingCart: ICartItem[];
   cartSize: number;
-  cartSubtotal: string;
+  cartSubtotal: number;
   addToCart(item: ICartItem): void;
   removeFromCart(itemId: string): void;
   updateQuantity(itemId: string, quantity: number): void;
@@ -14,7 +14,7 @@ interface ICartContext {
 export const CartContext = createContext<ICartContext>({
   shoppingCart: [],
   cartSize: 0,
-  cartSubtotal: "0.00",
+  cartSubtotal: 0,
   addToCart: () => {},
   removeFromCart: () => {},
   updateQuantity: () => {},
@@ -35,7 +35,7 @@ export const CartContextProvider: React.FC<IParentComponent> = ({
 
   const [shoppingCart, setShoppingCart] = useState<ICartItem[]>(checkLocalCart);
   const [cartSize, setCartSize] = useState(0);
-  const [cartSubtotal, setCartSubtotal] = useState("0.00");
+  const [cartSubtotal, setCartSubtotal] = useState(0);
 
   useEffect(() => {
     localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
@@ -43,14 +43,13 @@ export const CartContextProvider: React.FC<IParentComponent> = ({
 
   useMemo(() => {
     let count = 0;
-    let subtotal = 0.0;
+    let subtotal = 0;
     shoppingCart.forEach((item) => {
       count += item.quantity;
-      subtotal += parseFloat(item.cost) * item.quantity;
+      subtotal += item.cost * item.quantity;
     });
-    const formattedSubtotal = subtotal.toFixed(2);
     setCartSize(count);
-    setCartSubtotal(formattedSubtotal);
+    setCartSubtotal(subtotal);
   }, [shoppingCart]);
 
   const addToCart = (newItem: ICartItem) => {

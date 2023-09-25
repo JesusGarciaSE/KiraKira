@@ -2,9 +2,9 @@ export interface IItem {
   id: string;
   name: string;
   image: string;
-  price: string;
+  price: number;
   onSale: boolean;
-  salePrice: string;
+  salePrice: number;
   description: string;
 }
 
@@ -16,7 +16,7 @@ export interface ICartItem {
   name: string;
   id: string;
   image: string;
-  cost: string;
+  cost: number;
   quantity: number;
 }
 
