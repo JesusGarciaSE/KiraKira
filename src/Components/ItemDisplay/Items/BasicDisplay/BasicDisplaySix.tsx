@@ -31,13 +31,13 @@ const BasicDisplaySix: React.FC<BasicDisplay> = ({ item, onClick, onAdd }) => {
         <p className="text-sm text-center">
           {item.onSale && (
             <span className="text-saleHighlight text-sm">
-              ${item.salePrice}
+              ${item.salePrice/100}
             </span>
           )}{" "}
           <span
             className={`${item.onSale ? "line-through" : ""} text-saleMarkdown`}
           >
-            ${item.price}
+            ${item.price/100}
           </span>
         </p>
       </div>

@@ -63,7 +63,7 @@ const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
         ))}
       </ul>
       <p className="w-full text-2xl font-bold text-right ml-auto">
-        Subtotal ({cartSize} item{cartSize > 1 && "s"}): ${cartSubtotal}
+        Subtotal ({cartSize} item{cartSize > 1 && "s"}): ${cartSubtotal/100}
       </p>
       <Button
         label="Proceed to Checkout"

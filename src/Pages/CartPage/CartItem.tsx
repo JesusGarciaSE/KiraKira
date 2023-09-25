@@ -26,7 +26,7 @@ const CartItem: React.FC<{ item: ICartItem }> = ({ item }) => {
       <img src={item.image} className="aspect-auto h-32 my-auto" />
       <div className="flex flex-col flex-1 text-2xl">
         <p className="underline decoration-purple-600">{item.name}</p>
-        <p className="w-fit font-bold">{item.cost}</p>
+        <p className="w-fit font-bold">{item.cost/100}</p>
         <ButtonSelector
           className="h-12 w-36 my-5"
           initialValue={item.quantity}
