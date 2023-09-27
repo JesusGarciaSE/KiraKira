@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -8,7 +7,7 @@ import LoginPage from "./Pages/LoginPage/LoginPage.tsx";
 import SignupPage from "./Pages/SignupPage/SignupPage.tsx";
 import CollectionsPage from "./Pages/CollectionsPage/CollectionsPage.tsx";
 import CartPage from "./Pages/CartPage/CartPage.tsx";
-import CheckoutResultPage from "./Pages/CheckoutPage/CheckoutResultPage.tsx";
+import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -48,15 +47,13 @@ const router = createBrowserRouter([
         element: <CartPage className="flex-1 w-screen" />,
       },
       {
-        path: "/checkout/:status",
-        element: <CheckoutResultPage className="flex-1 w-screen" />,
-      },
+        path: "/checkout",
+        element: <CheckoutPage className="flex-1 w-screen" />,
+      }
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <RouterProvider router={router} />
 );
