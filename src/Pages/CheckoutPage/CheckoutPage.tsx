@@ -17,8 +17,7 @@ import { useAuth } from "../../Services/AuthContext";
 import CheckoutForm from "./CheckoutForm";
 import { ICustomizableComponent } from "../../Models/ComponentModels";
 import CheckoutResults from "./CheckoutResults";
-
-const stripePromise = loadStripe("");
+const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_API_KEY);
 interface IOrderRequest {
   items: ICartItem[];
   orderId: string;

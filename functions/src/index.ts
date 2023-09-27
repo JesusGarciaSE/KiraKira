@@ -11,7 +11,7 @@ import { getFirestore } from "firebase-admin/firestore";
 import admin = require("firebase-admin");
 import { onCall } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions";
-const stripe = require("stripe");
+const stripe = require("stripe")(process.env.SECRET_API_KEY);
 // Start writing functions`
 // https://firebase.google.com/docs/functions/typescript
 admin.initializeApp();
