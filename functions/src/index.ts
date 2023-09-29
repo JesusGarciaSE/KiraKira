@@ -30,6 +30,25 @@ interface IOrderRequest {
   orderId: string;
 }
 
+const KIRAKIRA_DOMAIN = "http://localhost:5173";
+
+exports.getCheckoutSession = onCall(async (request) => {
+  console.log(request.data);
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price: "price_1Nv5pzGsdFFuwWQScQhfm7rz",
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `${KIRAKIRA_DOMAIN}/checkout/success`,
+    cancel_url: `${KIRAKIRA_DOMAIN}/checkout/failed`,
+  });
+  console.log(session);
+  return { session: session.url };
+});
+
 exports.getClientSecret = onCall<IOrderRequest>(async (request) => {
   let items = request.data.items;
   let orderId = request.data.orderId;
