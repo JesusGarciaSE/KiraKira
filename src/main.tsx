@@ -7,7 +7,6 @@ import LoginPage from "./Pages/LoginPage/LoginPage.tsx";
 import SignupPage from "./Pages/SignupPage/SignupPage.tsx";
 import CollectionsPage from "./Pages/CollectionsPage/CollectionsPage.tsx";
 import CartPage from "./Pages/CartPage/CartPage.tsx";
-import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 import CheckoutResults from "./Pages/CheckoutPage/CheckoutResults.tsx";
 
 const router = createBrowserRouter([
@@ -46,10 +45,6 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartPage className="flex-1 w-screen" />,
-      },
-      {
-        path: "/checkout",
-        element: <CheckoutPage className="flex-1 w-screen" />,
       },
       {
         path: "/checkout/:result",

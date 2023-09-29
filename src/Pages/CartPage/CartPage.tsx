@@ -37,14 +37,12 @@ const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
       <p className="w-full text-2xl font-bold text-right ml-auto">
         Subtotal ({cartSize} item{cartSize > 1 && "s"}): ${cartSubtotal / 100}
       </p>
-      {/* <Link to="/checkout"> */}
       <Button
         label="Proceed to Checkout"
         className="h-12 w-full mt-4 shadow-lg bg-gradient-to-b from-kira-bg-end via-kira-bg-through to-kira-bg-start rounded-lg"
         textOptions="text-2xl"
         onClick={goToSession}
       />
-      {/* </Link> */}
     </div>
   );
 };

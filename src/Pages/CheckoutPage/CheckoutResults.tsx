@@ -5,39 +5,8 @@ import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 // import { useStripe } from "@stripe/react-stripe-js";
 import { useParams } from "react-router-dom";
 
-const CheckoutResults: React.FC<ICustomizableComponent> = ({className}) => {
-  // const stripe = useStripe();
-  // const [message, setMessage] = useState<string>();
+const CheckoutResults: React.FC<ICustomizableComponent> = ({ className }) => {
   const { result } = useParams();
-  // useEffect(() => {
-  //   if (!stripe) {
-  //     return;
-  //   }
-  //   if (!clientSecret) {
-  //     return;
-  //   }
-  //   stripe
-  //     .retrievePaymentIntent(clientSecret)
-  //     .then(({ paymentIntent }: PaymentIntentResult) => {
-  //       if (!paymentIntent) {
-  //         return;
-  //       }
-  //       switch (paymentIntent.status) {
-  //         case "succeeded":
-  //           setMessage("Checkout completed!");
-  //           break;
-  //         case "processing":
-  //           setMessage("Your payment is processing.");
-  //           break;
-  //         case "requires_payment_method":
-  //           setMessage("Your payment was not successful, please try again.");
-  //           break;
-  //         default:
-  //           setMessage("Checkout Error, something went wrong.");
-  //           break;
-  //       }
-  //     });
-  // }, [stripe, clientSecret]);
   return (
     <div className={`${className} grid content-center bg-rose-400 p-4`}>
       <div className="bg-purple-800 rounded-xl p-4">
