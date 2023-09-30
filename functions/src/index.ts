@@ -17,14 +17,22 @@ const stripe = require("stripe")(process.env.SECRET_API_KEY);
 admin.initializeApp();
 const firestore = getFirestore();
 
-interface ICartItem {
+export interface ICartItem {
   name: string;
   id: string;
   image: string;
   cost: number;
+  onSale: boolean;
   quantity: number;
 }
+interface IShoppingCart {
+  orders: ICartItem[];
+}
 
+interface IStripeItem {
+  price: any;
+  quantity: number;
+}
 interface IOrderRequest {
   items: ICartItem[];
   orderId: string;
@@ -32,22 +40,38 @@ interface IOrderRequest {
 
 const KIRAKIRA_DOMAIN = "http://localhost:5173";
 
-exports.getCheckoutSession = onCall(async (request) => {
-  console.log(request.data);
+exports.getCheckoutSession = onCall<IShoppingCart>(async (request) => {
+  logger.log("received order", request.data.orders);
+  const items = await getItems(request.data.orders);
+  logger.log("items: ", items);
   const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price: "price_1Nv5pzGsdFFuwWQScQhfm7rz",
-        quantity: 1,
-      },
-    ],
+    line_items: items,
     mode: "payment",
     success_url: `${KIRAKIRA_DOMAIN}/checkout/success`,
     cancel_url: `${KIRAKIRA_DOMAIN}/checkout/failed`,
   });
-  console.log(session);
   return { session: session.url };
 });
+
+const getItems = async (order: ICartItem[]) => {
+  let items: IStripeItem[] = [];
+  for (const item of order) {
+    await firestore
+      .collection("Products")
+      .where("id", "==", item.id)
+      .get()
+      .then((documents) => {
+        documents.forEach((doc) => {
+          let product = doc.data();
+          items.push({
+            price: product.onSale ? product.priceIDSale : product.priceIDDefault,
+            quantity: item.quantity,
+          });
+        });
+      });
+  }
+  return items;
+};
 
 exports.getClientSecret = onCall<IOrderRequest>(async (request) => {
   let items = request.data.items;
