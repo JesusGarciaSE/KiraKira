@@ -16,6 +16,7 @@ const stripe = require("stripe")(process.env.SECRET_API_KEY);
 // https://firebase.google.com/docs/functions/typescript
 admin.initializeApp();
 const firestore = getFirestore();
+const bodyParser = require('body-parser');
 
 export interface ICartItem {
   name: string;
@@ -74,6 +75,14 @@ const getItems = async (order: ICartItem[]) => {
   }
   return items;
 };
+
+exports.stripewebhooks = onRequest((request, response) => {
+  const payload = bodyParser(request.body);
+  logger.log("webhook triggered");
+  console.log(payload);
+  console.log("webhook triggered");
+  response.status(200).send("webhook triggered");
+});
 
 exports.getClientSecret = onCall<IOrderRequest>(async (request) => {
   let items = request.data.items;
