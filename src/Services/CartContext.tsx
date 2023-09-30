@@ -9,6 +9,7 @@ interface ICartContext {
   addToCart(item: ICartItem): void;
   removeFromCart(itemId: string): void;
   updateQuantity(itemId: string, quantity: number): void;
+  resetCart (): void;
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -18,6 +19,7 @@ export const CartContext = createContext<ICartContext>({
   addToCart: () => {},
   removeFromCart: () => {},
   updateQuantity: () => {},
+  resetCart: () => {},
 });
 export const useCart = (): ICartContext => {
   return useContext(CartContext);
@@ -79,6 +81,12 @@ export const CartContextProvider: React.FC<IParentComponent> = ({
     });
   };
 
+  const resetCart = () => {
+    setShoppingCart(() => {
+      return [];
+    });
+  };
+
   const CartObj = {
     shoppingCart,
     cartSize,
@@ -86,6 +94,7 @@ export const CartContextProvider: React.FC<IParentComponent> = ({
     addToCart,
     removeFromCart,
     updateQuantity,
+    resetCart,
   };
 
   return (
