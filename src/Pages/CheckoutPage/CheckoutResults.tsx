@@ -1,17 +1,23 @@
+import { useEffect } from "react";
 import { ICustomizableComponent } from "../../Models/ComponentModels";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 // import { useEffect, useState } from "react";
 // import { PaymentIntentResult } from "@stripe/stripe-js";
 // import { useStripe } from "@stripe/react-stripe-js";
 import { useParams } from "react-router-dom";
+import { useCart } from "../../Services/CartContext";
 
 const CheckoutResults: React.FC<ICustomizableComponent> = ({ className }) => {
   const { result } = useParams();
+  const { resetCart } = useCart();
+  useEffect(() => {
+    if (result && result === "success") resetCart();
+  }, [result]);
   return (
     <div className={`${className} grid content-center bg-rose-400 p-4`}>
       <div className="bg-purple-800 rounded-xl p-4">
         <div className="mx-auto mb-4 ">
-          {result ? (
+          {result === "success" ? (
             <div>
               <AiOutlineCheckCircle className="h-24 w-24 mx-auto text-green-600" />
               <p className="text-center font-bold text-2xl text-green-500 underline decoration-green-600">
