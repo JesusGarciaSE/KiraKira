@@ -8,8 +8,9 @@ export interface IItem {
   description: string;
 }
 
-export interface IUser {
-  userID: string;
+export interface IShoppingCart {
+  items: ICartItem[];
+  userId?: string;
 }
 
 export interface ICartItem {
