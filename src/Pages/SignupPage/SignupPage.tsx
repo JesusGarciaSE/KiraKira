@@ -3,7 +3,7 @@ import Button from "../../Components/Buttons/Button";
 import { GoogleProvider, auth } from "../../Services/FirebaseServices";
 import logo from "../../assets/SiteImages/Kirakira_logo_placeholder.png";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "../../Models/UserModels";
+import { IUserAuth } from "../../Models/UserModels";
 import SignupErrors from "./SignupErrors";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
@@ -12,7 +12,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { ICustomizableComponent } from "../../Models/ComponentModels";
 
 const SignupPage: React.FC<ICustomizableComponent> = ({ className }) => {
-  const [user, setUser] = useState<IUser>({ email: "", password: "" });
+  const [user, setUser] = useState<IUserAuth>({ email: "", password: "" });
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
