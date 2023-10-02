@@ -1,6 +1,7 @@
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
-import { BasicDisplay, ICartItem } from "../../../../Models/ItemModels";
+import { ICartItem } from "../../../../Models/ItemModels";
+import { BasicDisplay } from "../../../../Models/ComponentModels";
 
 const BasicDisplaySix: React.FC<BasicDisplay> = ({ item, onClick, onAdd }) => {
   const [favorite, setFavorite] = useState(false);

@@ -1,5 +1,5 @@
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { IItemModal } from "../../../Models/ItemModels";
+import { IItemModal } from "../../../Models/ComponentModels";
 
 const ItemDetailsModal: React.FC<IItemModal> = ({
   item,

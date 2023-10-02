@@ -25,14 +25,3 @@ export interface IDisplayGrid {
   products: IItem[];
 }
 
-export interface BasicDisplay {
-  item: IItem;
-  onClick(): void;
-  onAdd(item: ICartItem): void;
-}
-
-export interface IItemModal {
-  item: IItem;
-  isVisible: boolean;
-  onClose(): void;
-}

@@ -1,3 +1,5 @@
+import { ICartItem, IItem } from "./ItemModels";
+
 export interface ICustomizableComponent {
   className?: string;
 }
@@ -12,6 +14,18 @@ export interface IButton extends IParentComponent {
   textOptions?: string;
   label?: string;
   onClick?(e: React.MouseEvent): void;
+}
+
+export interface BasicDisplay {
+  item: IItem;
+  onClick(): void;
+  onAdd(item: ICartItem): void;
+}
+
+export interface IItemModal {
+  item: IItem;
+  isVisible: boolean;
+  onClose(): void;
 }
 
 export interface INavigationSidebar extends ICustomizableComponent {

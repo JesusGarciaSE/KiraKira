@@ -1,14 +1,8 @@
+import { IOrder } from "./ItemModels";
+
 export interface IUserAuth {
   email: string;
   password: string;
-}
-
-export interface IOrder {
-  orderNumber: string;
-  orderDate: string;
-  paymentStatus: string;
-  fulfillmentStatus: string;
-  total: string;
 }
 
 export interface IAddress {
