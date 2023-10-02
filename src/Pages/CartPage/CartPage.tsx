@@ -21,8 +21,7 @@ const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
       items: shoppingCart,
       ...(userId && { userId: userId }),
     });
-    console.log(response.data);
-    // window.location.href = response.data.session;
+    window.location.href = response.data.session;
   };
   return (
     <div className={`${className} p-5 overflow-x-hidden overflow-y-scroll`}>
