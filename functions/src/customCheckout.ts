@@ -8,7 +8,7 @@ const stripe = require("stripe")(process.env.SECRET_API_KEY);
 admin.initializeApp();
 const firestore = getFirestore();
 
-export interface ICartItem {
+interface ICartItem {
   name: string;
   id: string;
   image: string;

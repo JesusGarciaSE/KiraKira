@@ -11,36 +11,25 @@ import { getFirestore } from "firebase-admin/firestore";
 import admin = require("firebase-admin");
 import { onCall, onRequest } from "firebase-functions/v2/https";
 import { logger } from "firebase-functions";
+import {
+  ICartItem,
+  IOrderData,
+  IOrderRequest,
+  IStripeItem,
+} from "./Models/ItemModels";
 const stripe = require("stripe")(process.env.SECRET_API_KEY);
-// Start writing functions`
-// https://firebase.google.com/docs/functions/typescript
 admin.initializeApp();
 const firestore = getFirestore();
 const bodyParser = require("body-parser");
-
-interface ICartItem {
-  name: string;
-  id: string;
-  image: string;
-  cost: number;
-  quantity: number;
-}
-
-interface IOrderRequest {
-  items: ICartItem[];
-  orderId: string;
-}
-
-interface IStripeItem {
-  price: any;
-  quantity: number;
-}
+const { FieldValue } = require("firebase-admin/firestore");
 
 const KIRAKIRA_DOMAIN = "http://localhost:5173";
 
 exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
-  logger.log("received order", request.data.items);
-  const items = await getItems(request.data.items);
+  const requestItems = request.data.items;
+  const requestUserId = request.data.userId;
+  logger.log("received request", request.data);
+  const items = await getItems(requestItems);
   logger.log("items: ", items);
 
   const session = await stripe.checkout.sessions.create({
@@ -49,12 +38,18 @@ exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
     success_url: `${KIRAKIRA_DOMAIN}/checkout/success`,
     cancel_url: `${KIRAKIRA_DOMAIN}/checkout/failed`,
   });
-  updateUser(
-    request.data.items,
-    request.data.orderId,
-    session.amount_total,
-    session.amount_subtotal
-  );
+
+  const orderData: IOrderData = {
+    items: request.data.items,
+    paymentStatus: false,
+    fulfillmentStatus: false,
+    created: Date.now(),
+    total: session.amount_total,
+    subtotal: session.amount_subtotal,
+  };
+  const orderRef = await createOrder(orderData);
+  console.log("userId", requestUserId);
+  requestUserId && updateUser(requestUserId, orderRef.id, orderData);
   return { session: session.url };
 });
 
@@ -82,14 +77,31 @@ const getItems = async (order: ICartItem[]) => {
   return items;
 };
 
-const updateUser = (
-  items: ICartItem[],
-  orderID: string,
-  total: number,
-  subtotal: number
+const createOrder = async (orderData: IOrderData) => {
+  const orderRef = await firestore.collection("Orders").add({
+    ...orderData,
+  });
+  return orderRef;
+};
+
+const updateUser = async (
+  userId: string,
+  orderId: string,
+  orderData: IOrderData
 ) => {
-  const orderRef = firestore.collection("Orders").doc(orderID);
-  orderRef.update({ orderNo: orderID, total: total, subtotal: subtotal });
+  const userDoc = await firestore.collection("Users").doc(userId);
+  if (!userDoc) return;
+
+  const { items, ...userOrderData } = orderData;
+  let order = {
+    ...userOrderData,
+    orderId: orderId,
+  };
+
+  logger.log("updating user", userId, "with order", order);
+  userDoc.update({
+    orders: FieldValue.arrayUnion(order),
+  });
 };
 
 exports.stripewebhooks = onRequest((request, response) => {

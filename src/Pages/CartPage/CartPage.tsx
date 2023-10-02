@@ -4,22 +4,25 @@ import { useCart } from "../../Services/CartContext";
 import CartItem from "./CartItem";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "../../Services/FirebaseServices";
-import { ICartItem } from "../../Models/ItemModels";
-
-interface shoppingCart {
-  orders: ICartItem[]
-}
-
-interface redirectResponse {
-  session: string;
-}
+import { IShoppingCart } from "../../Models/ItemModels";
+import { useAuth } from "../../Services/AuthContext";
+import { IRedirectResponse } from "../../Models/APIModels";
 
 const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
   const { shoppingCart, cartSize, cartSubtotal } = useCart();
+  const { userId } = useAuth();
   const goToSession = async () => {
-    const checkoutSession = httpsCallable<shoppingCart, redirectResponse>(functions, "getCheckoutSession");
-    const response = await checkoutSession({orders: shoppingCart});
-    window.location.href=response.data.session;
+    const checkoutSession = httpsCallable<IShoppingCart, IRedirectResponse>(
+      functions,
+      "getCheckoutSession"
+    );
+
+    const response = await checkoutSession({
+      items: shoppingCart,
+      ...(userId && { userId: userId }),
+    });
+    console.log(response.data);
+    // window.location.href = response.data.session;
   };
   return (
     <div className={`${className} p-5 overflow-x-hidden overflow-y-scroll`}>
