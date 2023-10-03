@@ -55,7 +55,6 @@ const router = createBrowserRouter([
         path: "/account",
         element: <AccountPage className="flex-1 w-screen" />
       },
-      }
     ],
   },
 ]);

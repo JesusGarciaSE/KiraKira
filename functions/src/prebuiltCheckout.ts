@@ -92,9 +92,8 @@ const updateUser = async (
   const userDoc = await firestore.collection("Users").doc(userId);
   if (!userDoc) return;
 
-  const { items, ...userOrderData } = orderData;
   let order = {
-    ...userOrderData,
+    ...orderData,
     orderId: orderId,
   };
 
