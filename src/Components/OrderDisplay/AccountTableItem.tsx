@@ -6,50 +6,27 @@ interface IAccountTableItem extends ICustomizableComponent {
   order: IOrder;
 }
 
-const ORDER_DATA = [
-  "orderId",
-  "created",
-  "paymentStatus",
-  "fulfillmentStatus",
-  "total",
-];
-
 const AccountTableItem: React.FC<IAccountTableItem> = ({
   className,
   order,
 }) => {
-  const getDetails = (key: string, value: string | boolean | number) => {
-    console.log(key, value);
-    switch (key) {
-      case "created":
-        return new Date(value as number).toLocaleString("default", {
+  return (
+    <div className={`${className} flex flex-row gap-4`}>
+      <Link to={`/order/${order.orderId}`} className="text-blue-600 w-24">
+        {order.orderId.slice(0, 6)}
+      </Link>
+      <div className="w-24">
+        {new Date(order.created).toLocaleString("default", {
           month: "long",
           day: "2-digit",
           year: "numeric",
-        });
-      case "paymentStatus":
-        return (value as boolean) ? "Paid" : "Unpaid";
-      case "fulfillmentStatus":
-        return (value as boolean) ? "Fulfilled" : "Unfulfilled";
-      case "total":
-        return `$${(value as number) / 100}`;
-      default: //orderId
-        return (value as string).slice(0, 6);
-    }
-  };
-  return (
-    <div className={`${className} flex flex-row gap-4`}>
-      {ORDER_DATA.map((key, index) => (
-        <div key={`${key}_${index}`} className="w-24">
-          {key === "orderId" ? (
-            <Link to={`/order/${order[key]}`} className="text-blue-600">
-              {getDetails(key, order[key])}
-            </Link>
-          ) : (
-            getDetails(key, order[key])
-          )}
-        </div>
-      ))}
+        })}
+      </div>
+      <div className="w-24">{order.paymentStatus ? "Paid" : "Unpaid"}</div>
+      <div className="w-24">
+        {order.fulfillmentStatus ? "Fulfilled" : "Unfulfilled"}
+      </div>
+      <div className="w-24">{`$${(order.total as number) / 100}`}</div>
     </div>
   );
 };

@@ -32,5 +32,4 @@ export interface IOrder {
   created: number;
   subtotal: number;
   total: number;
-  [id: string]: string | boolean | number;
 }
