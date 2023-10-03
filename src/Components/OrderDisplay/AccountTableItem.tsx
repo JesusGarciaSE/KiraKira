@@ -1,20 +1,14 @@
-import { Link } from "react-router-dom";
-import { ICustomizableComponent } from "../../Models/ComponentModels";
-import { IOrder } from "../../Models/ItemModels";
+import { IOrderDisplayItem } from "../../Models/ComponentModels";
 
-interface IAccountTableItem extends ICustomizableComponent {
-  order: IOrder;
-}
-
-const AccountTableItem: React.FC<IAccountTableItem> = ({
+const AccountTableItem: React.FC<IOrderDisplayItem> = ({
   className,
   order,
 }) => {
   return (
     <div className={`${className} flex flex-row gap-4`}>
-      <Link to={`/order/${order.orderId}`} className="text-blue-600 w-24">
+      <div className="text-blue-600 w-24">
         {order.orderId.slice(0, 6)}
-      </Link>
+      </div>
       <div className="w-24">
         {new Date(order.created).toLocaleString("default", {
           month: "long",

@@ -1,4 +1,4 @@
-import { ICartItem, IItem } from "./ItemModels";
+import { ICartItem, IItem, IOrder } from "./ItemModels";
 
 export interface ICustomizableComponent {
   className?: string;
@@ -46,4 +46,11 @@ export interface INavigationButton extends ICustomizableComponent {
   size?: string;
   color?: string;
   onClick(): void;
+}
+
+export interface IOrderDisplayList extends ICustomizableComponent {
+  orders: IOrder[];
+}
+export interface IOrderDisplayItem extends ICustomizableComponent {
+  order: IOrder;
 }

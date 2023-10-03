@@ -1,17 +1,15 @@
-import { ICustomizableComponent } from "../../Models/ComponentModels";
-import { IOrder } from "../../Models/ItemModels";
+import { IOrderDisplayList } from "../../Models/ComponentModels";
 import AccountTableItem from "./AccountTableItem";
 
-interface IAccountTable extends ICustomizableComponent {
-  orders: IOrder[];
-}
+
 
 const ORDER_COLUMNS = ["Order", "Date", "Payment", "Fulfillment", "Total"];
 
-const AccountTable: React.FC<IAccountTable> = ({
+const AccountTable: React.FC<IOrderDisplayList> = ({
   className,
   orders,
 }) => {
+  console.log('account table', orders)
   return (
     <div className={`${className} flex flex-col w-fit`}>
       <div className="flex flex-row gap-4">
