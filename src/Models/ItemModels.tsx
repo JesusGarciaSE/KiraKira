@@ -25,3 +25,12 @@ export interface IDisplayGrid {
   products: IItem[];
 }
 
+export interface IOrder {
+  orderId: string;
+  paymentStatus: boolean;
+  fulfillmentStatus: boolean;
+  created: number;
+  subtotal: number;
+  total: number;
+  [id: string]: string | boolean | number;
+}
