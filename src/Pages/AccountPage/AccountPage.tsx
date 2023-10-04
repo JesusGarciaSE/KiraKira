@@ -6,11 +6,12 @@ import { useAuth } from "../../Services/AuthContext";
 import { IUser } from "../../Models/UserModels";
 import { IOrder } from "../../Models/ItemModels";
 import AccountTable from "../../Components/OrderDisplay/AccountTable";
+import OrderDisplay from "../../Components/OrderDisplay/OrderDisplay";
 
 const AccountPage: React.FC<ICustomizableComponent> = ({ className }) => {
   const { userId } = useAuth();
   const [orders, setOrders] = useState<IOrder[]>([]);
-
+  const [order, setOrder] = useState<IOrder>();
   useEffect(() => {
     const getUser = async () => {
       if (!userId) return;
@@ -26,12 +27,22 @@ const AccountPage: React.FC<ICustomizableComponent> = ({ className }) => {
     getUser();
   }, [userId]);
 
+  const clearOrder = () => {
+    setOrder(() => {
+      return undefined;
+    })
+  }
+
   return (
-    <div className={`${className} flex flex-col`}>
-      <label className="p-5">Account</label>
-      <div className="max-w-full overflow-auto">
-        <AccountTable className="px-5" orders={orders} />
-      </div>
+    <div className={`${className} p-5 overflow-scroll`}>
+      <h1 className="px-5 text-2xl font-bold">Account</h1>
+      {order ? (
+        <OrderDisplay order={order} clearOrder={clearOrder} />
+      ) : (
+        <div className="overflow-scroll">
+          <AccountTable orders={orders} setOrder={setOrder} />
+        </div>
+      )}
     </div>
   );
 };

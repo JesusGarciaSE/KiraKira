@@ -54,3 +54,11 @@ export interface IOrderDisplayList extends ICustomizableComponent {
 export interface IOrderDisplayItem extends ICustomizableComponent {
   order: IOrder;
 }
+
+export interface IOrderDetails extends IOrderDisplayItem {
+  clearOrder(): void;
+}
+
+export interface IAccountTable extends IOrderDisplayList {
+  setOrder(order: IOrder): void;
+}

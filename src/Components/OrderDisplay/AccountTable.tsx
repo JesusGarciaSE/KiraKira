@@ -1,15 +1,13 @@
-import { IOrderDisplayList } from "../../Models/ComponentModels";
+import { IAccountTable } from "../../Models/ComponentModels";
 import AccountTableItem from "./AccountTableItem";
-
-
 
 const ORDER_COLUMNS = ["Order", "Date", "Payment", "Fulfillment", "Total"];
 
-const AccountTable: React.FC<IOrderDisplayList> = ({
+const AccountTable: React.FC<IAccountTable> = ({
   className,
   orders,
+  setOrder,
 }) => {
-  console.log('account table', orders)
   return (
     <div className={`${className} flex flex-col w-fit`}>
       <div className="flex flex-row gap-4">
@@ -20,7 +18,11 @@ const AccountTable: React.FC<IOrderDisplayList> = ({
         ))}
       </div>
       {orders.map((order, index) => (
-        <AccountTableItem key={`${order.orderId}_${index}`} order={order} />
+        <AccountTableItem
+          key={`${order.orderId}_${index}`}
+          order={order}
+          setOrder={setOrder}
+        />
       ))}
     </div>
   );
