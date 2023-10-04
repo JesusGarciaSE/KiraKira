@@ -26,7 +26,7 @@ const CartPage: React.FC<ICustomizableComponent> = ({ className }) => {
   return (
     <div className={`${className} p-5 overflow-x-hidden overflow-y-scroll`}>
       <p className="text-3xl font-bold">Shopping Cart</p>
-      <ul className="py-4 overflow-hidden overflow-x-hidden overflow-y-auto flex-1">
+      <ul className="py-4 flex-1">
         {shoppingCart.map((item) => (
           <li
             key={item.id}
