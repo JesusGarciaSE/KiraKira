@@ -20,10 +20,10 @@ import {
 const stripe = require("stripe")(process.env.SECRET_API_KEY);
 admin.initializeApp();
 const firestore = getFirestore();
-const bodyParser = require("body-parser");
 const { FieldValue } = require("firebase-admin/firestore");
 
 const KIRAKIRA_DOMAIN = "http://localhost:5173";
+const endpointSecret = process.env.WHSEC;
 
 exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
   const requestItems = request.data.items;
@@ -104,9 +104,38 @@ const updateUser = async (
 };
 
 exports.stripewebhooks = onRequest((request, response) => {
-  const payload = bodyParser(request.body);
-  logger.log("webhook triggered");
-  console.log(payload);
   console.log("webhook triggered");
-  response.status(200).send("webhook triggered");
+  const payload = request.rawBody;
+  const requestSignatures = request.headers["stripe-signature"];
+  let stripePayload;
+  try {
+    stripePayload = stripe.webhooks.constructEvent(
+      payload,
+      requestSignatures,
+      endpointSecret
+    );
+    console.log("stripePayload", stripePayload);
+  } catch (err) {
+    console.log(err);
+    response.status(400).send(`webhook error ${err}`);
+  }
+
+  switch (stripePayload.type) {
+    case "payment_intent.succeeded":
+      const paymentIntent = stripePayload.data.object;
+      console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+      // Then define and call a method to handle the successful payment intent.
+      // handlePaymentIntentSucceeded(paymentIntent);
+      break;
+    case "payment_method.attached":
+      const paymentMethod = stripePayload.data.object;
+      console.log("payment_method", paymentMethod);
+      // Then define and call a method to handle the successful attachment of a PaymentMethod.
+      // handlePaymentMethodAttached(paymentMethod);
+      break;
+    default:
+      // Unexpected event type
+      console.log(`Unhandled event type ${stripePayload.type}.`);
+  }
+  response.status(200).end();
 });
