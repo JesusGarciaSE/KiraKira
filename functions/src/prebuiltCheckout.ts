@@ -47,6 +47,7 @@ exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
     total: session.amount_total,
     subtotal: session.amount_subtotal,
     ch_session_id: session.id,
+    ...(requestUserId && { user_id: requestUserId }),
   };
   const orderRef = await createOrder(orderData);
   console.log("userId", requestUserId);

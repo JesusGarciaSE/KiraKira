@@ -24,4 +24,5 @@ export interface IOrderData {
   total: number;
   subtotal: number;
   ch_session_id: string;
+  user_id?: string;
 }
