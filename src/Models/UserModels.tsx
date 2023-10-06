@@ -6,14 +6,14 @@ export interface IUserAuth {
 }
 
 export interface IAddress {
-  name: string;
-  streetOne: string;
-  streetTwo?: string;
   city: string;
-  state: string;
-  zip: string;
   country: string;
-  default: string;
+  line1: string;
+  line2?: string;
+  postal_code: string;
+  state: string;
+  name?: string;
+  default?: boolean;
 }
 
 export interface IUser extends IUserAuth {
