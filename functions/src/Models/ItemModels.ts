@@ -26,3 +26,19 @@ export interface IOrderData {
   ch_session_id: string;
   user_id?: string;
 }
+
+export interface IAddress {
+  name: string;
+  streetOne: string;
+  streetTwo?: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  default: string;
+}
+
+export interface IUser {
+  orders: IOrderData[];
+  addresses: IAddress[];
+}

@@ -10,12 +10,14 @@
 import { getFirestore } from "firebase-admin/firestore";
 import admin = require("firebase-admin");
 import { onCall, onRequest } from "firebase-functions/v2/https";
+import { onDocumentUpdated } from "firebase-functions/v2/firestore";
 import { logger } from "firebase-functions";
 import {
   ICartItem,
   IOrderData,
   IOrderRequest,
   IStripeItem,
+  IUser,
 } from "./Models/ItemModels";
 const stripe = require("stripe")(process.env.SECRET_API_KEY);
 admin.initializeApp();
@@ -144,3 +146,29 @@ const updateOrder = async (checkoutId: string) => {
     doc.ref.update({ paymentStatus: true });
   });
 };
+
+exports.updateUserOrder = onDocumentUpdated(
+  "Orders/{OrderId}",
+  async (event) => {
+    const updatedOrder = event.data?.after.data() as IOrderData;
+
+    if (updatedOrder.user_id) {
+      const userDocRef = firestore
+        .collection("Users")
+        .doc(updatedOrder.user_id);
+      const userDoc = await userDocRef.get();
+      if (!userDoc.exists) return;
+      const user = userDoc.data() as IUser;
+      const oldOrder = user.orders.filter(
+        (order) => order.ch_session_id === updatedOrder.ch_session_id
+      )[0];
+
+      userDocRef.update({
+        orders: FieldValue.arrayRemove(oldOrder),
+      });
+      userDocRef.update({
+        orders: FieldValue.arrayUnion(updatedOrder),
+      });
+    }
+  }
+);
