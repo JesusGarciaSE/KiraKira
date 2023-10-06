@@ -13,7 +13,7 @@ const AccountTableItem: React.FC<IAccountTableItem> = ({
   return (
     <div className={`${className} flex flex-row gap-4`}>
       <div className="text-blue-600 w-24" onClick={() => setOrder(order)}>
-        {order.orderId.slice(0, 6)}
+        {order.order_id.slice(0, 6)}
       </div>
       <div className="w-24">
         {new Date(order.created).toLocaleString("default", {
