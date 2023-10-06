@@ -13,6 +13,7 @@ import { onCall, onRequest } from "firebase-functions/v2/https";
 import { onDocumentUpdated } from "firebase-functions/v2/firestore";
 import { logger } from "firebase-functions";
 import {
+  IAddress,
   ICartItem,
   IOrderData,
   IOrderRequest,
@@ -39,6 +40,9 @@ exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
     mode: "payment",
     success_url: `${KIRAKIRA_DOMAIN}/checkout/success`,
     cancel_url: `${KIRAKIRA_DOMAIN}/checkout/failed`,
+    automatic_tax: { enabled: true },
+    billing_address_collection: "required",
+    shipping_address_collection: { allowed_countries: ["US"] },
   });
 
   const orderData: IOrderData = {
@@ -121,15 +125,16 @@ exports.stripewebhooks = onRequest((request, response) => {
     logger.log("Error with request", err);
     response.status(400).send(`webhook error ${err}`);
   }
-
   switch (stripePayload.type) {
-    case "charge.succeeded":
-      logger.log("Charge.succeeded for order", stripePayload.data.object.id)
-      updateOrder(stripePayload.data.object.id);
-      break;
     case "checkout.session.completed":
-      logger.log("Checkout.session. completed for order", stripePayload.data.object.id)
-      updateOrder(stripePayload.data.object.id);
+      logger.log(
+        "Checkout.session.completed for order",
+        stripePayload.data.object.id
+      );
+      updateOrder(
+        stripePayload.data.object.id,
+        stripePayload.data.object.shipping_details.address
+      );
       break;
     default:
       // Unexpected event type
@@ -138,14 +143,14 @@ exports.stripewebhooks = onRequest((request, response) => {
   response.status(200).end();
 });
 
-const updateOrder = async (checkoutId: string) => {
+const updateOrder = async (checkoutId: string, shippingAddress: IAddress) => {
   const orderDoc = await firestore
     .collection("Orders")
     .where("ch_session_id", "==", checkoutId)
     .limit(1)
     .get();
   orderDoc.forEach((doc) => {
-    doc.ref.update({ paymentStatus: true });
+    doc.ref.update({ paymentStatus: true, shipping_address: shippingAddress });
   });
 };
 
@@ -164,7 +169,7 @@ exports.updateUserOrder = onDocumentUpdated(
       const oldOrder = user.orders.filter(
         (order) => order.ch_session_id === updatedOrder.ch_session_id
       )[0];
-      updatedOrder.order_id = oldOrder.order_id
+      updatedOrder.order_id = oldOrder.order_id;
       userDocRef.update({
         orders: FieldValue.arrayRemove(oldOrder),
       });
