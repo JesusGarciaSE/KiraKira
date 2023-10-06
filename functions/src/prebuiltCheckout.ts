@@ -52,7 +52,7 @@ exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
     ...(requestUserId && { user_id: requestUserId }),
   };
   const orderRef = await createOrder(orderData);
-  console.log("userId", requestUserId);
+  logger.log("userId", requestUserId);
   requestUserId && updateUser(requestUserId, orderRef.id, orderData);
   return { session: session.url };
 });
