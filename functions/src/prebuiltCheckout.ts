@@ -32,7 +32,7 @@ exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
   const requestUserId = request.data.userId;
   logger.log("received request", request.data);
   const items = await getItems(requestItems);
-  logger.log("items: ", items);
+  logger.log("Converted line items for stripe ", items);
 
   const session = await stripe.checkout.sessions.create({
     line_items: items,
@@ -52,7 +52,7 @@ exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
     ...(requestUserId && { user_id: requestUserId }),
   };
   const orderRef = await createOrder(orderData);
-  logger.log("userId", requestUserId);
+  logger.log("UserId found, updating user ", requestUserId);
   requestUserId && updateUser(requestUserId, orderRef.id, orderData);
   return { session: session.url };
 });
@@ -101,7 +101,7 @@ const updateUser = async (
     order_id: orderId,
   };
 
-  logger.log("updating user", userId, "with order", order);
+  logger.log("Adding order", order, "to user", userId);
   userDoc.update({
     orders: FieldValue.arrayUnion(order),
   });
@@ -124,9 +124,11 @@ exports.stripewebhooks = onRequest((request, response) => {
 
   switch (stripePayload.type) {
     case "charge.succeeded":
+      logger.log("Charge.succeeded for order", stripePayload.data.object.id)
       updateOrder(stripePayload.data.object.id);
       break;
     case "checkout.session.completed":
+      logger.log("Checkout.session. completed for order", stripePayload.data.object.id)
       updateOrder(stripePayload.data.object.id);
       break;
     default:
