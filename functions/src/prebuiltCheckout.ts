@@ -98,7 +98,7 @@ const updateUser = async (
 
   let order = {
     ...orderData,
-    orderId: orderId,
+    order_id: orderId,
   };
 
   logger.log("updating user", userId, "with order", order);
@@ -162,7 +162,7 @@ exports.updateUserOrder = onDocumentUpdated(
       const oldOrder = user.orders.filter(
         (order) => order.ch_session_id === updatedOrder.ch_session_id
       )[0];
-
+      updatedOrder.order_id = oldOrder.order_id
       userDocRef.update({
         orders: FieldValue.arrayRemove(oldOrder),
       });
