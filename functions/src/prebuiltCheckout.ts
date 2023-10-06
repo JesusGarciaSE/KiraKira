@@ -46,6 +46,7 @@ exports.getCheckoutSession = onCall<IOrderRequest>(async (request) => {
     created: Date.now(),
     total: session.amount_total,
     subtotal: session.amount_subtotal,
+    ch_session_id: session.id,
   };
   const orderRef = await createOrder(orderData);
   console.log("userId", requestUserId);
@@ -104,7 +105,6 @@ const updateUser = async (
 };
 
 exports.stripewebhooks = onRequest((request, response) => {
-  console.log("webhook triggered");
   const payload = request.rawBody;
   const requestSignatures = request.headers["stripe-signature"];
   let stripePayload;
@@ -114,28 +114,32 @@ exports.stripewebhooks = onRequest((request, response) => {
       requestSignatures,
       endpointSecret
     );
-    console.log("stripePayload", stripePayload);
   } catch (err) {
-    console.log(err);
+    logger.log("Error with request", err);
     response.status(400).send(`webhook error ${err}`);
   }
 
   switch (stripePayload.type) {
-    case "payment_intent.succeeded":
-      const paymentIntent = stripePayload.data.object;
-      console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-      // Then define and call a method to handle the successful payment intent.
-      // handlePaymentIntentSucceeded(paymentIntent);
+    case "charge.succeeded":
+      updateOrder(stripePayload.data.object.id);
       break;
-    case "payment_method.attached":
-      const paymentMethod = stripePayload.data.object;
-      console.log("payment_method", paymentMethod);
-      // Then define and call a method to handle the successful attachment of a PaymentMethod.
-      // handlePaymentMethodAttached(paymentMethod);
+    case "checkout.session.completed":
+      updateOrder(stripePayload.data.object.id);
       break;
     default:
       // Unexpected event type
-      console.log(`Unhandled event type ${stripePayload.type}.`);
+      logger.log(`Unhandled event type ${stripePayload.type}.`);
   }
   response.status(200).end();
 });
+
+const updateOrder = async (checkoutId: string) => {
+  const orderDoc = await firestore
+    .collection("Orders")
+    .where("ch_session_id", "==", checkoutId)
+    .limit(1)
+    .get();
+  orderDoc.forEach((doc) => {
+    doc.ref.update({ paymentStatus: true });
+  });
+};
