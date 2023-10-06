@@ -26,7 +26,7 @@ export interface IDisplayGrid {
 }
 
 export interface IOrder {
-  orderId: string;
+  order_id: string;
   items: ICartItem[];
   paymentStatus: boolean;
   fulfillmentStatus: boolean;
