@@ -133,7 +133,8 @@ exports.stripewebhooks = onRequest((request, response) => {
       );
       updateOrder(
         stripePayload.data.object.id,
-        stripePayload.data.object.shipping_details.address
+        stripePayload.data.object.shipping_details.address,
+        stripePayload.data.object.customer_details.address
       );
       break;
     default:
@@ -143,21 +144,29 @@ exports.stripewebhooks = onRequest((request, response) => {
   response.status(200).end();
 });
 
-const updateOrder = async (checkoutId: string, shippingAddress: IAddress) => {
+const updateOrder = async (
+  checkoutId: string,
+  shippingAddress: IAddress,
+  billingAddress: IAddress
+) => {
   const orderDoc = await firestore
     .collection("Orders")
     .where("ch_session_id", "==", checkoutId)
     .limit(1)
     .get();
   orderDoc.forEach((doc) => {
-    doc.ref.update({ paymentStatus: true, shipping_address: shippingAddress });
+    doc.ref.update({
+      paymentStatus: true,
+      shipping_address: shippingAddress,
+      billing_address: billingAddress,
+    });
   });
 };
 
 exports.updateUserOrder = onDocumentUpdated(
   "Orders/{OrderId}",
   async (event) => {
-    const updatedOrder = event.data?.after.data() as IOrderData;
+    let updatedOrder = event.data?.after.data() as IOrderData;
 
     if (updatedOrder.user_id) {
       const userDocRef = firestore
@@ -169,11 +178,26 @@ exports.updateUserOrder = onDocumentUpdated(
       const oldOrder = user.orders.filter(
         (order) => order.ch_session_id === updatedOrder.ch_session_id
       )[0];
-      updatedOrder.order_id = oldOrder.order_id;
+      const shippingAddressExists = user.addresses
+        ? user.addresses.some(
+            (address) =>
+              updatedOrder.shipping_address?.line1 === address.line1 &&
+              updatedOrder.shipping_address.postal_code === address.postal_code
+          )
+        : false;
+      updatedOrder = {
+        ...updatedOrder,
+        order_id: oldOrder.order_id,
+        shipping_address: updatedOrder.shipping_address,
+        billing_address: updatedOrder.billing_address,
+      };
       userDocRef.update({
         orders: FieldValue.arrayRemove(oldOrder),
       });
       userDocRef.update({
+        ...(!shippingAddressExists && {
+          addresses: FieldValue.arrayUnion(updatedOrder.shipping_address),
+        }),
         orders: FieldValue.arrayUnion(updatedOrder),
       });
     }
