@@ -1,3 +1,5 @@
+import { IAddress } from "./UserModels";
+
 export interface IItem {
   id: string;
   name: string;
@@ -33,4 +35,8 @@ export interface IOrder {
   created: number;
   subtotal: number;
   total: number;
+  ch_session_id: string;
+  user_id?: string;
+  shipping_address?: IAddress;
+  billing_address?: IAddress;
 }
