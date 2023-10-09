@@ -9,6 +9,7 @@ import CollectionsPage from "./Pages/CollectionsPage/CollectionsPage.tsx";
 import CartPage from "./Pages/CartPage/CartPage.tsx";
 import CheckoutResults from "./Pages/CheckoutPage/CheckoutResults.tsx";
 import AccountPage from "./Pages/AccountPage/AccountPage.tsx";
+import React from "react";
 
 const router = createBrowserRouter([
   {
@@ -53,12 +54,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/account",
-        element: <AccountPage className="flex-1 w-screen" />
+        element: <AccountPage className="flex-1 w-screen" />,
       },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
