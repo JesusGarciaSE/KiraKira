@@ -19,7 +19,7 @@ const AccountTable: React.FC<IAccountTable> = ({
       </div>
       {orders.map((order, index) => (
         <AccountTableItem
-          key={`${order.orderId}_${index}`}
+          key={`${order.order_id}_${index}`}
           order={order}
           setOrder={setOrder}
         />
