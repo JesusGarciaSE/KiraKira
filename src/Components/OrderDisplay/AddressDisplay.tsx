@@ -23,7 +23,7 @@ const AddressDisplay: React.FC<IAddressDisplay> = ({ address, type }) => {
       })()}
     <p>{address.line1}</p>
     <p>{`${address.city} ${address.state} ${address.postal_code}`}</p>
-    <p>{address.country}</p>
+    <p>{new Intl.DisplayNames(['en'], {type: 'region'}).of(address.country)}</p>
     </div>
   );
 };

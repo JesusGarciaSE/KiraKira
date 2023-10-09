@@ -1,7 +1,12 @@
 import { MdArrowBack } from "react-icons/md";
 import { IOrderDetails } from "../../Models/ComponentModels";
+import AddressDisplay from "./AddressDisplay";
 
-const OrderDisplay: React.FC<IOrderDetails> = ({ className, order, clearOrder }) => {
+const OrderDisplay: React.FC<IOrderDetails> = ({
+  className,
+  order,
+  clearOrder,
+}) => {
   return (
     <div className={`${className} flex flex-col gap-4 overflow-hidden`}>
       <div className=" gap-4 text-2xl font-bold">
@@ -11,7 +16,7 @@ const OrderDisplay: React.FC<IOrderDetails> = ({ className, order, clearOrder })
           </div>
           <p className="self-center">Order</p>
         </div>
-        <p>{order.orderId}</p>
+        <p>{order.order_id}</p>
       </div>
       <p>
         {new Date(order.created).toLocaleString("default", {
@@ -38,12 +43,22 @@ const OrderDisplay: React.FC<IOrderDetails> = ({ className, order, clearOrder })
         ))}
         <li className="flex flex-row justify-between border-solid border-y-1 border-y-purple-600 first:border-b-0 last:border-t-0 py-4">
           <p>Subtotal</p>
-          <p>${order.subtotal/100}</p>
+          <p>${order.subtotal / 100}</p>
         </li>
         <li className="flex flex-row justify-between border-solid border-y-1 border-y-purple-600 first:border-b-0 last:border-t-0 py-4">
           <p>Total</p>
-          <p>${order.total/100}</p>
+          <p>${order.total / 100}</p>
         </li>
+        {order.shipping_address && (
+          <li>
+            <AddressDisplay address={order.shipping_address} type="shipping" />
+          </li>
+        )}
+        {order.billing_address && (
+          <li>
+            <AddressDisplay address={order.billing_address} type="billing" />
+          </li>
+        )}
       </ul>
     </div>
   );
