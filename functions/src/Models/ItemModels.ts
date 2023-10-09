@@ -26,6 +26,8 @@ export interface IOrderData {
   ch_session_id: string;
   order_id?: string;
   user_id?: string;
+  shipping_address?: IAddress;
+  billing_address?: IAddress;
 }
 
 export interface IAddress {
