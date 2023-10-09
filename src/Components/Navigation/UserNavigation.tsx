@@ -7,7 +7,7 @@ import { useAuth } from "../../Services/AuthContext";
 import { signOut } from "firebase/auth";
 import { INavigationSidebar } from "../../Models/ComponentModels";
 
-const pages = ["Account", "Cart", "Settings"];
+const pages = ["Account", "Cart"];
 
 const UserNavigation: React.FC<INavigationSidebar> = ({
   className,
