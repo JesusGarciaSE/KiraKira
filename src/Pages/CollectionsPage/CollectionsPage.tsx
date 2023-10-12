@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import DisplayGrid from "../../Components/ItemDisplay/DisplayGrid";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { firestore } from "../../Services/FirebaseServices";
 import { IItem } from "../../Models/ItemModels";
+import { useCatalogue } from "../../Services/CatalogueContext";
 
 interface ICollectionsPage {
   route: "new" | "sale" | "product";
@@ -12,43 +11,49 @@ interface ICollectionsPage {
 const CollectionsPage: React.FC<ICollectionsPage> = ({ route }) => {
   const [productList, setProductList] = useState<IItem[]>([]);
   const { category } = useParams();
+  const { catalogue } = useCatalogue();
 
   useEffect(() => {
-    let queryProducts;
+    setProductList(filterProducts(route));
+  }, [route]);
+
+  const filterProducts = (route: string): IItem[] => {
     switch (route) {
       case "new":
-        queryProducts = query(
-          collection(firestore, "Products"),
-          where("attributes", "array-contains", "new")
-        );
-        break;
+        return [
+          ...catalogue.Bookmarks.filter((item) =>
+            item.attributes.includes("new")
+          ),
+          ...catalogue.Magnets.filter((item) =>
+            item.attributes.includes("new")
+          ),
+          ...catalogue.Stickers.filter((item) =>
+            item.attributes.includes("new")
+          ),
+        ];
       case "sale":
-        queryProducts = query(
-          collection(firestore, "Products"),
-          where("onSale", "==", true)
-        );
+        return [
+          ...catalogue.Bookmarks.filter((item) => item.onSale),
+          ...catalogue.Magnets.filter((item) => item.onSale),
+          ...catalogue.Stickers.filter((item) => item.onSale),
+        ];
         break;
       case "product":
-        queryProducts = query(
-          collection(firestore, "Products"),
-          where("attributes", "array-contains", category)
-        );
+        switch (category) {
+          case "bookmark":
+            return [...catalogue.Bookmarks];
+          case "magnet":
+            return [...catalogue.Magnets];
+          case "sticker":
+            return [...catalogue.Stickers];
+        }
         break;
 
       default:
+        return [];
     }
-
-    const products: IItem[] = [];
-    const querySnapshot = getDocs(queryProducts!);
-    querySnapshot.then((response) => {
-      response.docs.forEach((doc) => {
-        if (doc.data) {
-          products.push(doc.data() as IItem);
-        }
-      });
-      setProductList(products);
-    });
-  }, [category, route]);
+    return [];
+  };
 
   return <DisplayGrid products={productList} />;
 };
