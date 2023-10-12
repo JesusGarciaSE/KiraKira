@@ -14,13 +14,16 @@ const CollectionsPage: React.FC<ICollectionsPage> = ({ route }) => {
   const { catalogue } = useCatalogue();
 
   useEffect(() => {
-    setProductList(filterProducts(route));
-  }, [route]);
-
-  const filterProducts = (route: string): IItem[] => {
     switch (route) {
       case "new":
-        return [
+        setProductList([
+          ...catalogue.Bookmarks.filter((item) => item.onSale),
+          ...catalogue.Magnets.filter((item) => item.onSale),
+          ...catalogue.Stickers.filter((item) => item.onSale),
+        ]);
+        break;
+      case "sale":
+        setProductList([
           ...catalogue.Bookmarks.filter((item) =>
             item.attributes.includes("new")
           ),
@@ -30,30 +33,22 @@ const CollectionsPage: React.FC<ICollectionsPage> = ({ route }) => {
           ...catalogue.Stickers.filter((item) =>
             item.attributes.includes("new")
           ),
-        ];
-      case "sale":
-        return [
-          ...catalogue.Bookmarks.filter((item) => item.onSale),
-          ...catalogue.Magnets.filter((item) => item.onSale),
-          ...catalogue.Stickers.filter((item) => item.onSale),
-        ];
+        ]);
         break;
       case "product":
         switch (category) {
           case "bookmark":
-            return [...catalogue.Bookmarks];
+            setProductList([...catalogue.Bookmarks]);
+            break;
           case "magnet":
-            return [...catalogue.Magnets];
+            setProductList([...catalogue.Magnets]);
+            break;
           case "sticker":
-            return [...catalogue.Stickers];
+            setProductList([...catalogue.Stickers]);
+            break;
         }
-        break;
-
-      default:
-        return [];
     }
-    return [];
-  };
+  }, [catalogue, category, route]);
 
   return <DisplayGrid products={productList} />;
 };
