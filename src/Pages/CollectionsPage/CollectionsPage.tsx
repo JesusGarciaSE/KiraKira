@@ -50,7 +50,11 @@ const CollectionsPage: React.FC<ICollectionsPage> = ({ route }) => {
     }
   }, [catalogue, category, route]);
 
-  return <DisplayGrid products={productList} />;
+  return (
+    <div className="overflow-scroll">
+      <DisplayGrid products={productList} />
+    </div>
+  );
 };
 
 export default CollectionsPage;
