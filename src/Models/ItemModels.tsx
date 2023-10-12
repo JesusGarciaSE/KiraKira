@@ -8,6 +8,7 @@ export interface IItem {
   onSale: boolean;
   salePrice: number;
   description: string;
+  attributes: string[];
 }
 
 export interface IShoppingCart {
