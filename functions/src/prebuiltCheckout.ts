@@ -12,14 +12,14 @@ import admin = require("firebase-admin");
 import { onCall, onRequest } from "firebase-functions/v2/https";
 import { onDocumentUpdated } from "firebase-functions/v2/firestore";
 import { logger } from "firebase-functions";
+import { IAddress } from "../../src/Models/UserModels";
 import {
-  IAddress,
-  ICartItem,
   IOrderData,
   IOrderRequest,
   IStripeItem,
-  IUser,
-} from "./Models/ItemModels";
+} from "../../src/Models/BackendModels";
+import { ICartItem } from "../../src/Models/ItemModels";
+import { IUser } from "../../src/Models/UserModels";
 const stripe = require("stripe")(process.env.SECRET_API_KEY);
 admin.initializeApp();
 const firestore = getFirestore();
