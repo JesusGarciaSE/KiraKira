@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import DisplayGrid from "../../Components/ItemDisplay/DisplayGrid";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { firestore } from "../../Services/FirebaseServices";
 import { IItem } from "../../Models/ItemModels";
+import { useCatalogue } from "../../Services/CatalogueContext";
 
 interface ICollectionsPage {
   route: "new" | "sale" | "product";
@@ -12,43 +11,44 @@ interface ICollectionsPage {
 const CollectionsPage: React.FC<ICollectionsPage> = ({ route }) => {
   const [productList, setProductList] = useState<IItem[]>([]);
   const { category } = useParams();
+  const { catalogue } = useCatalogue();
 
   useEffect(() => {
-    let queryProducts;
     switch (route) {
       case "new":
-        queryProducts = query(
-          collection(firestore, "Products"),
-          where("attributes", "array-contains", "new")
-        );
+        setProductList([
+          ...catalogue.Bookmarks.filter((item) => item.onSale),
+          ...catalogue.Magnets.filter((item) => item.onSale),
+          ...catalogue.Stickers.filter((item) => item.onSale),
+        ]);
         break;
       case "sale":
-        queryProducts = query(
-          collection(firestore, "Products"),
-          where("onSale", "==", true)
-        );
+        setProductList([
+          ...catalogue.Bookmarks.filter((item) =>
+            item.attributes.includes("new")
+          ),
+          ...catalogue.Magnets.filter((item) =>
+            item.attributes.includes("new")
+          ),
+          ...catalogue.Stickers.filter((item) =>
+            item.attributes.includes("new")
+          ),
+        ]);
         break;
       case "product":
-        queryProducts = query(
-          collection(firestore, "Products"),
-          where("attributes", "array-contains", category)
-        );
-        break;
-
-      default:
-    }
-
-    const products: IItem[] = [];
-    const querySnapshot = getDocs(queryProducts!);
-    querySnapshot.then((response) => {
-      response.docs.forEach((doc) => {
-        if (doc.data) {
-          products.push(doc.data() as IItem);
+        switch (category) {
+          case "bookmark":
+            setProductList([...catalogue.Bookmarks]);
+            break;
+          case "magnet":
+            setProductList([...catalogue.Magnets]);
+            break;
+          case "sticker":
+            setProductList([...catalogue.Stickers]);
+            break;
         }
-      });
-      setProductList(products);
-    });
-  }, [category, route]);
+    }
+  }, [catalogue, category, route]);
 
   return <DisplayGrid products={productList} />;
 };
